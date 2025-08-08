@@ -1,13 +1,14 @@
 +++
 date = '2025-03-23T20:38:46-06:00'
 title = 'Old Nn Review'
+draft = true
 +++
 
 # Context
 
 When I was just learning how to program I tried doing alot of things that were
 far outside the reach of my ability. Which resulted in me spending alot of time
-in StackOverflow threads and watching tutorial videos on YouTube. 
+in StackOverflow threads and watching tutorial videos on YouTube.
 
 On that note six years ago I tried writing and training a convolutional neural
 network in C++ from scratch to learn XOR following along roughly with [some
@@ -25,7 +26,7 @@ void Neuron::feedForward(const Layer& previousLayer){
         feedForwardVal += previousLayer[n].getActivation() * previousLayer[n]._outputWeights[_index].weight;
     }
     _activation = f_Activation(feedForwardVal);
-} 
+}
 
 void Network::feedForward(const std::vector<double> inputs){
     assert(inputs.size() == _network[0].size());

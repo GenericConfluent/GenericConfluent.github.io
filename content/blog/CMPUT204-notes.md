@@ -4,6 +4,7 @@ title = 'CMPUT204 Notes'
 description = 'An overview of key concepts algorithms and their analysis.'
 tags = ["computer-science", "algorithms"]
 toc = true
+draft = true
 +++
 
 ## Analysis and Proof

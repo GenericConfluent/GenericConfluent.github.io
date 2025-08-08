@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://genericconfluent.github.io/"
 
-title = "Random Place"
+title = "Generic Confluent"
 description = "I am a happy hippopotamus"
 
 theme = "anemone"

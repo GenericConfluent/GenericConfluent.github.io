@@ -3,9 +3,10 @@ date = '2025-08-06T10:12:09-06:00'
 title = 'Blender Portal'
 description = "Quest for a decent portal setup in blender. No stylization, just infinite recursion and mesh teleporation."
 tags = ['blender', 'math', 'effects']
+draft = true
 +++
 I somehow got possesed by the idea that I *needed* to implement a portal in blender, and a proper explanation of the
-theory surrounding the implementation details seemed quite lacking--and I like to have a concrete handle on what I'm
+theory surrounding the implementation details seemed quite lacking&mdash;and I like to have a concrete handle on what I'm
 doing when I work on something. So here we are. The goal of this post is not quite to create a radical new and better
 portal impl, but moreso to pick among the pieces people have already developed and assemble them into a good and reusable
 impl.
@@ -53,9 +54,10 @@ fn portal_transform(inputs: GroupInput, self_object: Object) -> Geometry {
         "rotation_other",
         connected_portal.object_info().rotation().to_euler()
     );
+
     geometry.store_named_attribute(
         "rotation_other_relative",
-        connected_portal.object_info().relative_rotation().to_euler()
+        connected_portal.object_info().relative_rotation(self_object).to_euler()
     );
 
     geometry.store_named_attribute(
@@ -84,12 +86,28 @@ fn portal(
     let rotation_other_relative = attributes.geometry("rotation_other_relative");
 
     // Compute the direction a ray should exit out-portal.
-    let exit_direction = -1.0 * geometry.incoming.inverse_euler_rotate(rotation_self)
-        .euler_rotate(rotation_other);
+    let exit_direction = (-1.0 * geometry.incoming)
+        .vector_rotate(A {
+            inverse: true,
+            kind: RotationKind::Euler,
+            center: Vec3::ZERO,
+            rotation: rotation_self,
+        })
+        .vector_rotate(A {
+            inverse: false,
+            kind: RotationKind::Euler,
+            center: Vec3::ZERO,
+            rotation: rotation_other,
+        })
 
     // Compute corrective normal so rays don't accidentally hit the out portal once moved.
     let alignment = vec3(0.0, 0.0, 1.0)
-        .euler_rotate(rotation_other_relative)
+        .vector_rotate(A {
+            inverse: false,
+            kind: RotationKind::Euler,
+            center: Vec3::ZERO,
+            rotation: rotation_other_relative,
+        })
         .dot(vec3(0.0, 0.0, 1.0));
     let offset_direction = if alignment > 0.0 { 1.0 } else { -1.0 };
     let slight_offset_from_out_portal = geometry.normal * 0.001 * offset_direction;
@@ -97,8 +115,18 @@ fn portal(
     // Location ray should exit out-portal.
     let offset_to_other = location_other - object_info.location;
     let exit_position = (geometry.position + offset_to_other)
-        .inverse_euler_rotate(rotation_self)
-        .euler_rotate(rotation_other) - slight_offset_from_out_portal;
+        .vector_rotate(A {
+            inverse: true,
+            kind: RotationKind::Euler,
+            center: location_other,
+            rotation: rotation_self,
+        })
+        .vector_rotate(A {
+            inverse: false,
+            kind: RotationKind::Euler,
+            center: location_other,
+            rotation: rotation_other_relative,
+        }) - slight_offset_from_out_portal;
 
     // Move the ray and change direction
     let surface = ray_portal_bsdf(Color::WHITE, exit_position, exit_direction);
@@ -126,6 +154,23 @@ or `Direction` is equivalent to a Transparent BSDF.
 ### Object Info
 `Location` here is the position of the object origin.
 
+`Rotation` is of course the rotation of the object. The Blender UI presents
+rotations in euler format, but they are internally stored as quaternions (hence
+the need to perform a `to_euler` in the graph above).
+
+
+>`Transform Space`: The transformation of the vector and geometry outputs.
+> - `Original`: Output the geometry relative to the input object transform, and the location, rotation and scale relative to the world origin.
+> - `Relative`: Bring the input object geometry, location, rotation and scale into the modified object, maintaining the relative position between the two objects in the scene.
+
+Quick clafiying note on the transform space property (`Relative` or `Original`),
+the [docs
+explanation](https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/input/scene/object_info.html)
+has some clunky wording. `Original` is what you would see in the n-panel with
+the object transforms, `Relative` is the difference between the transforms for
+two objects. It is the transformation from the object with the geometry node
+modifier to the object passed to `Object Info`.
+
 ### Geometry
 `Position`: Place the ray hit on the surface of the object.
 
@@ -145,5 +190,104 @@ computation in the shader is also unnecessary since it is uniform across a
 portals face (Blender or whatever it uses for shader compilation may be able to
 cache it out through some advanced magic, but I'll cache it in an attribute to
 guarantee that happens).
+
+## Clean, Optimize, and Scale
+So here is my modified geometry node.
+```rust
+#[geometry_node]
+fn portal_transform(
+    inputs: GroupInput,
+    self_object: Object,
+    normal: Normal,
+) -> Geometry {
+    let mut geometry = inputs.get("Geometry");
+    let object = inputs.get("Object");
+
+    let other_info = ObjectInfo {
+        object,
+        as_instance: false,
+    }.eval(ObjectInfoProps {
+        transform_space: TransformSpace::Relative,
+    });
+
+    // Ok now store the actual transforms
+    let other_info = connected_portal.object_info()
+        .relative(self_object);
+
+    geometry.store_named_attribute(Attribute {
+        name: "offset_to_other",
+        domain: Domain::Face,
+        value: other_info.location,
+    });
+
+    let rotate_to_other = other_info.rotation.to_euler();
+    geometry.store_named_attribute(Attribute {
+        name: "rotate_to_other",
+        domain: Domain::Face,
+        value: rotate_to_other,
+    });
+
+    geometry.store_named_attribute(
+        name: "scale_to_other",
+        domain: Domain::Face,
+        value: other_info.scale
+    );
+
+    // Compute and cache normal correction
+    let other_portal_normal = vec3(0.0, 0.0, 1.0).euler_rotate(rotate_to_other);
+    let dir = if out_portal_normal.dot(vec3(0.0, 0.0, 1.0)) > 0.0 { -1.0 } else { 1.0 };
+
+    let normal_correction = normal.normal
+        .capture_attribute(Domain::Face)
+        .get("normal") * 0.001 * dir;
+
+    geometry.store_named_attribute(Attribute {
+        name: "normal_correction",
+        domain: Domain::Face,
+        value: normal_correction,
+    });
+
+    return geometry;
+}
+```
+
+For the computation of `dir` the &plusmn;1 is flipped to avoid needing to do a
+subtraction in the shader (not that I think it would make a substantial
+difference). And we only store the relative transforms since the original shader
+is really only ever using the relative rotation and location (offset).
+
+```rust
+#[shader]
+fn portal(
+    geometry: Geometry,
+    attributes: Attributes,
+) -> MaterialOutput {
+    let offset_to_other: Vec3 = attributes.geometry("offset_to_other");
+    let rotate_to_other: Vec3 = attributes.geometry("rotate_to_other");
+    let scale_to_other: Vec3 = attributes.geometry("scale_to_other");
+
+    let normal_correction: Vec3 = attributes.geometry("normal_correction");
+
+    // Direction ray should exit out-portal.
+    let exit_direction = -1.0 * geometry.incoming.euler_rotate(rotate_to_other);
+
+    // Location ray should exit out-portal.
+    let exit_position = (geometry.position * scale_to_other)
+        .euler_rotate({
+            center: object_info.location,
+            rotation: rotate_to_other,
+        }) + offset_to_other + slight_offset_from_out_portal;
+
+    // Move the ray and change direction
+    let surface = ray_portal_bsdf(Color::WHITE, exit_position, exit_direction);
+
+    return MaterialOutput {
+        surface,
+        ..Default::default()
+    };
+}
+```
+Now that cleans things up quite nicely. Do be careful thinking about the calculation for
+exit position though. `geometry.position` is i
 
 # Geometry Teleportation

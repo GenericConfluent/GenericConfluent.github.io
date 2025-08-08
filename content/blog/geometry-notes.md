@@ -3,6 +3,7 @@ date = '2025-03-22T10:12:09-06:00'
 title = 'Geometry Notes'
 description = 'Definitions, notation, and theorems for introductory euclidean geometry.'
 tags = ['geometry', 'math']
+draft = true
 +++
 
 This is purposefully does not include proofs. I made this as a part of my study for my second geometry midterm and final, while proofs are particularly helpful for remembering results I don't have the time time to typeset them and they would likely distract from the key information.
