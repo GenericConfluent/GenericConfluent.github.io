@@ -23,4 +23,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
       - uses: GenericConfluent/zola-deploy-pages@main
