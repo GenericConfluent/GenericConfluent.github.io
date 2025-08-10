@@ -19,7 +19,7 @@ Here is the feature list I want from the implementation:
 3. When we see a portal through the portal, there will be a portal&trade;
 
 Here are the restrictions:
-- A Portal is an N-Gon which lies in a 2D plane.
+- A Portal is an N-Gon which lies in the XY plane when ignoring rotation and translation.
 - Connected portals have the same geometry.
 - Origin lies in the spot on the mesh for each portal.
 
@@ -27,6 +27,10 @@ I'll break up implementation into three sub problems:
 1. Portal Transform: Thinking about what going from one portal to another means.
 1. Portal Shading: What the transform means for rays.
 2. Geometry Teleportation: What the transform means for geometry.
+
+And finally before we talk about portals I should define that the front of a
+portal is the side whose normal points up and the back of a portal is the side
+that points down when rotation is zeroed.
 
 # Portal Transform
 {{ img(id="/blog/blender-portal/portal-ray-connect.gif") }}
@@ -51,7 +55,6 @@ quite lucky to see this because if not I would have spent forever trying to figu
 out why just doing the portal transform is insufficient for shading.
 
 {{ img(id="/blog/blender-portal/offset-overview-light.png") }}
-
 
 ## Normal Correction
 
@@ -216,4 +219,25 @@ Here we actualy don't have so conventional a solution in Blender. There is a rou
 of things that needs to be done before this is working.
 
 1. Divide the mesh into geometry that should stay and geometry that should be portaled.
-2. Make the portaled geometry disappear at the in portal and appear
+2. Make the portaled geometry disappear at the in portal and appear at the out portal.
+
+## Divide Geometry
+Step one is a bit troublesome because we want our portals to work for static renders. And
+presumably which side of the portal the geometry should exit on is determined by which
+side it goes in on, but in a render we don't really have a concept of movement. To fix
+this we need to define outside of the system which side of the system we want the geometry
+moved on. I'll do this by accepting a vertex group and pulling the weights. A weight below
+0.5 will mean it will exit the back of the out-portal and above and including 0.5 means
+it will exit out the front of  the out-portal.
+
+So we can figure out which geometry should be selected once it passes a certain side but
+because I'm trying to store the weights in a single vertex group per mesh we need to perform
+additional selection. Alot of implementation seem to just use a plane to cut the mesh and
+everything on the other side of the plane is moved. That is not flexible enough for what I want.
+
+1. The portal is just a face so we can extrude it by some depth along it's
+normal and then the geometry past the face which lies inside of the prism is
+what we want to transport.
+
+2. For fully connected meshes we can select the edges that intersect with the portal face
+then grow the selection
