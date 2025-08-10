@@ -240,4 +240,17 @@ normal and then the geometry past the face which lies inside of the prism is
 what we want to transport.
 
 2. For fully connected meshes we can select the edges that intersect with the portal face
-then grow the selection
+then grow the selection "as much as we can."
+
+Both have drawbacks. The first is problematic because it allows for the object to enter the portal from behind potentially even if it is not touching the portal face,
+and the second is likely to be a very computationally expensive, requires source code modification/complex or hacky geometry node use. And both have upsides, the first is cheap to compute and easy to implement 
+And the second will produce excellent results.
+
+I'm going to go with the first and allow users to animate the depth property on each individual object to allow for teleporting or not teleporting the object.
+
+## Teleport Geometry 
+The best way to do this probably depends on the mesh type and portal set up. The best results will probably be achieved with an intersection boolean modifier, 
+For dense meshes, it will likely be best to instance the object and on the instances if possible change the faces we want to be hidden to use the transparent BSDF shader.
+Potentially a simple delete geometry might be solution as well.
+
+I'm going to go with intersection because it is the most robust solution in the general case (e.g. it allows properly transporting the default cube).
