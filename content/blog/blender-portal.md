@@ -58,62 +58,61 @@ out why just doing the portal transform is insufficient for shading.
 
 ## Normal Correction
 
-```rust
-#[geometry_node]
-fn portal_transform(
+```swift
+@geometryNode
+func portalTransform(
     inputs: GroupInput,
-    self_object: Object,
-    normal: Normal,
+    selfObject: Object,
+    normal: Normal
 ) -> Geometry {
-    let mut geometry = inputs.get("Geometry");
-    let object = inputs.get("Object");
-
-    let other_info = ObjectInfo {
-        object,
-        as_instance: false,
-    }.eval(ObjectInfoProps {
-        transform_space: TransformSpace::Relative,
-    });
-
+    var geometry = inputs.get("Geometry")
+    let object = inputs.get("Object")
+    
+    let otherInfo = objectInfo(
+        object: object,
+        asInstance: false,
+        transformSpace: .relative
+    )
+    
     // Ok now store the actual transforms
-    let other_info = connected_portal.object_info()
-        .relative(self_object);
-
-    geometry.store_named_attribute(Attribute {
+    let otherInfo = connectedPortal.objectInfo()
+        .relative(selfObject)
+    
+    geometry.storeNamedAttribute(
         name: "offset_to_other",
-        domain: Domain::Face,
-        value: other_info.location,
-    });
-
-    let rotate_to_other = other_info.rotation.to_euler();
-    geometry.store_named_attribute(Attribute {
-        name: "rotate_to_other",
-        domain: Domain::Face,
-        value: rotate_to_other,
-    });
-
-    geometry.store_named_attribute(
+        domain: .face,
+        value: otherInfo.location
+    )
+    
+    let rotateToOther = otherInfo.rotation.toEuler()
+    geometry.storeNamedAttribute(
+        name: "rotate_to_other", 
+        domain: .face,
+        value: rotateToOther
+    )
+    
+    geometry.storeNamedAttribute(
         name: "scale_to_other",
-        domain: Domain::Face,
-        value: other_info.scale
-    );
-
+        domain: .face, 
+        value: otherInfo.scale
+    )
+    
     // Compute and cache normal correction
-    let other_portal_normal = vec3(0.0, 0.0, 1.0).euler_rotate(rotate_to_other);
+    let otherPortalNormal = vec3(0.0, 0.0, 1.0).eulerRotate(rotateToOther)
     // NOTE: This got flipped so I could use a + later.
-    let dir = if out_portal_normal.dot(vec3(0.0, 0.0, 1.0)) > 0.0 { -1.0 } else { 1.0 };
-
-    let normal_correction = normal.normal
-        .capture_attribute(Domain::Face)
-        .get("normal") * 0.001 * dir;
-
-    geometry.store_named_attribute(Attribute {
+    let dir = outPortalNormal.dot(vec3(0.0, 0.0, 1.0)) > 0.0 ? -1.0 : 1.0
+    
+    let normalCorrection = normal.normal
+        .captureAttribute(domain: .face)
+        .get("normal") * 0.001 * dir
+    
+    geometry.storeNamedAttribute(
         name: "normal_correction",
-        domain: Domain::Face,
-        value: normal_correction,
-    });
-
-    return geometry;
+        domain: .face,
+        value: normalCorrection
+    )
+    
+    return geometry
 }
 ```
 
@@ -122,35 +121,38 @@ subtraction in the shader (not that I think it would make a substantial
 difference). And we only store the relative transforms since the original shader
 is really only ever using the relative rotation and location (offset).
 
-```rust
-#[shader]
-fn portal(
+```swift
+@shader
+func portal(
     geometry: Geometry,
-    attributes: Attributes,
+    attributes: Attributes
 ) -> MaterialOutput {
-    let offset_to_other: Vec3 = attributes.geometry("offset_to_other");
-    let rotate_to_other: Vec3 = attributes.geometry("rotate_to_other");
-    let scale_to_other: Vec3 = attributes.geometry("scale_to_other");
-
-    let normal_correction: Vec3 = attributes.geometry("normal_correction");
-
+    let offsetToOther: Vec3 = attributes.geometry("offset_to_other")
+    let rotateToOther: Vec3 = attributes.geometry("rotate_to_other")
+    let scaleToOther: Vec3 = attributes.geometry("scale_to_other")
+    
+    let normalCorrection: Vec3 = attributes.geometry("normal_correction")
+    
     // Direction ray should exit out-portal.
-    let exit_direction = -1.0 * geometry.incoming.euler_rotate(rotate_to_other);
-
+    let exitDirection = -1.0 * geometry.incoming.eulerRotate(rotateToOther)
+    
     // Location ray should exit out-portal.
-    let exit_position = (geometry.position * scale_to_other)
-        .euler_rotate({
-            center: object_info.location,
-            rotation: rotate_to_other,
-        }) + offset_to_other + slight_offset_from_out_portal;
-
+    let exitPosition = (geometry.position * scaleToOther)
+        .eulerRotate(
+            center: objectInfo.location,
+            rotation: rotateToOther
+        ) + offsetToOther + slightOffsetFromOutPortal
+    
     // Move the ray and change direction
-    let surface = ray_portal_bsdf(Color::WHITE, exit_position, exit_direction);
-
-    return MaterialOutput {
-        surface,
-        ..Default::default()
-    };
+    let surface = rayPortalBSDF(
+        color: .white,
+        exitPosition: exitPosition,
+        exitDirection: exitDirection
+    )
+    
+    return MaterialOutput(
+        surface: surface
+    )
 }
 ```
 
