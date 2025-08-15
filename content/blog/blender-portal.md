@@ -21,7 +21,7 @@ Here is the feature list I want from the implementation:
 Here are the restrictions:
 - A Portal is an N-Gon which lies in the XY plane when ignoring rotation and translation.
 - Connected portals have the same geometry.
-- Origin lies in the spot on the mesh for each portal.
+- Origin is a point from the portals face.
 
 I'll break up implementation into three sub problems:
 1. Portal Transform: Thinking about what going from one portal to another means.
@@ -56,7 +56,10 @@ out why just doing the portal transform is insufficient for shading.
 
 {{ img(id="/blog/blender-portal/offset-overview-light.png") }}
 
-## Normal Correction
+It turns out that offsetting the exiting ray from the out portal with the normal
+is a very good idea because it ensures that the cycles doesn't think the ray hit
+the portal the next time it is supposed to be moving.
+
 
 ```swift
 @geometryNode
@@ -67,97 +70,122 @@ func portalTransform(
 ) -> Geometry {
     var geometry = inputs.get("Geometry")
     let object = inputs.get("Object")
-    
+
     let otherInfo = objectInfo(
-        object: object,
-        asInstance: false,
-        transformSpace: .relative
-    )
-    
+            object: object,
+            asInstance: false,
+            transformSpace: .relative
+        )
+
     // Ok now store the actual transforms
-    let otherInfo = connectedPortal.objectInfo()
-        .relative(selfObject)
-    
-    geometry.storeNamedAttribute(
-        name: "offset_to_other",
-        domain: .face,
-        value: otherInfo.location
+    let otherInfo = objectInfo(
+        // NOTE: How object is transformed relative to self object.
+        transformSpace: .relative,
+        object: connectedPortal,
+        asInstance: false,
     )
-    
+
+    geometry.storeNamedAttribute(
+        dataType: .vector,
+        domain: .face,
+        name: "offset_to_other",
+        value: otherInfo.location,
+    )
+
     let rotateToOther = otherInfo.rotation.toEuler()
     geometry.storeNamedAttribute(
-        name: "rotate_to_other", 
+        dataType: .vector,
         domain: .face,
-        value: rotateToOther
+        name: "rotate_to_other",
+        value: rotateToOther,
     )
-    
+
     geometry.storeNamedAttribute(
+        dataType: .vector,
+        domain: .face,
         name: "scale_to_other",
-        domain: .face, 
-        value: otherInfo.scale
+        value: otherInfo.scale,
     )
-    
+
     // Compute and cache normal correction
-    let otherPortalNormal = vec3(0.0, 0.0, 1.0).eulerRotate(rotateToOther)
-    // NOTE: This got flipped so I could use a + later.
-    let dir = outPortalNormal.dot(vec3(0.0, 0.0, 1.0)) > 0.0 ? -1.0 : 1.0
-    
-    let normalCorrection = normal.normal
-        .captureAttribute(domain: .face)
-        .get("normal") * 0.001 * dir
-    
-    geometry.storeNamedAttribute(
-        name: "normal_correction",
-        domain: .face,
-        value: normalCorrection
-    )
-    
+    let otherPortalNormal = vec3(0.0, 0.0, 1.0)
+      .vectorRotate(
+          type: .euler,
+          invert: false,
+          rotation: rotateToOther,
+      )
+
     return geometry
 }
 ```
 
-For the computation of `dir` the &plusmn;1 is flipped to avoid needing to do a
-subtraction in the shader (not that I think it would make a substantial
-difference). And we only store the relative transforms since the original shader
-is really only ever using the relative rotation and location (offset).
+My version of both of these is slightly different from the tutorial video I
+linked to above. I only store relative transforms because that's all you really
+need, and also I modified the position transform to accomodate my need to
+support portal scaling.
 
 ```swift
+// It would be really nice if this was just a shader node. Or you could do matrix
+// multiplication, a fundamental operation in GPU-land which is somehow not a concept
+// in Blenders shader nodes.
+func transformVector(
+    vector: Vec3,
+    scale: Vec3,
+    rotate: Vec3,
+    translate: Vec3,
+    worldPosition: Vec3,
+) -> Vec3 {
+    return ((vector - worldPosition) * scale)
+        .vectorRotate(
+            type: .euler,
+            invert: false,
+            center: Vec3.zero,
+            rotation: rotate,
+        ) + translate + worldPosition
+}
+
 @shader
 func portal(
     geometry: Geometry,
+    objectInfo: ObjectInfo,
     attributes: Attributes
 ) -> MaterialOutput {
     let offsetToOther: Vec3 = attributes.geometry("offset_to_other")
     let rotateToOther: Vec3 = attributes.geometry("rotate_to_other")
     let scaleToOther: Vec3 = attributes.geometry("scale_to_other")
-    
-    let normalCorrection: Vec3 = attributes.geometry("normal_correction")
-    
+
+    let normalCorrection: Vec3 = geometry.normal * geometry.normal.dot(geometry.incoming).sign() * -0.0001
+
     // Direction ray should exit out-portal.
-    let exitDirection = -1.0 * geometry.incoming.eulerRotate(rotateToOther)
-    
-    // Location ray should exit out-portal.
-    let exitPosition = (geometry.position * scaleToOther)
-        .eulerRotate(
-            center: objectInfo.location,
+    let exitDirection = -1.0 * geometry.incoming
+        .vectorRotate(
+            type: .euler,
+            invert: false,
+            center: Vec3.zero,
             rotation: rotateToOther
-        ) + offsetToOther + slightOffsetFromOutPortal
-    
+        )
+
+    // Location ray should exit out-portal.
+    let exitPosition = transformVector(
+        vector: geometry.position + normalCorrection,
+        scale: scaleToOther,
+        rotate: rotateToOther,
+        translate: offsetToOther,
+        worldPosition: objectInfo.location,
+    )
+
     // Move the ray and change direction
     let surface = rayPortalBSDF(
         color: .white,
-        exitPosition: exitPosition,
-        exitDirection: exitDirection
+        position: exitPosition,
+        direction: exitDirection
     )
-    
+
     return MaterialOutput(
         surface: surface
     )
 }
 ```
-
-Do be careful thinking about the calculation for exit position though.
-`geometry.position` is i
 
 Note that we Must use Cycles since Ray Portal BSDF is only available in Cycles
 ([Ray Portal
@@ -165,39 +193,25 @@ BSDF](https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/ray_p
 That's fine though since a ray tracer is more suited to portal rendering than a
 rasterizer (EEVEE).
 
-and I
-personally found it to be quite helpful. In particular the info about the need
-for a normal correction to offset the rays slightly from the portal surface so
-they don't end up jumping back through the portal was particularly helpful (that
-would have taken me awhile to figure out).
-
-The shader the tutorial provides does this suboptimally since it computes the
-rotation for every single ray (which probably adds up). The corrective normal
-computation in the shader is also unnecessary since it is uniform across a
-portals face (Blender or whatever it uses for shader compilation may be able to
-cache it out through some advanced magic, but I'll cache it in an attribute to
-guarantee that happens).
-
-
-
 ## Important Nodes
 ### Ray Portal BSDF
-This is a shader that lets you arbitrarily set the direction and position of a ray that hits the shaded object.
-If you don't supply a direction or position it will not be changed. A Ray Portal BSDF without supplied `Position`
-or `Direction` is equivalent to a Transparent BSDF.
+This is a shader that lets you arbitrarily set the direction and position of a
+ray that hits the shaded object. If you don't supply a direction or position it
+will not be changed. A Ray Portal BSDF without supplied `Position` or
+`Direction` is equivalent to a Transparent BSDF.
 
 ### Geometry
-`Position`: Place the ray hit on the surface of the object.
 
-`Normal`: Surface normal at the hit position.
+`Position`: Place the ray hit on the surface of the object (world space).
 
-`Incoming`: A vector (normalized I think) that points towards the viewer (active
-camera in renders, and viewport camera in viewport).
+`Normal`: Surface normal at the hit position. (Normalized)
+
+`Incoming`: A vector that points towards the direction the ray came from. (Normalized)
 
 {{ img(id="/blog/blender-portal/vector-overview-light.png") }}
 
 ### Object Info
-`Location` here is the position of the object origin.
+`Location` here is the position of the object origin. (world space)
 
 `Rotation` is of course the rotation of the object. The Blender UI presents
 rotations in euler format, but they are internally stored as quaternions (hence
@@ -215,13 +229,12 @@ the object transforms, `Relative` is the difference between the transforms for
 two objects. It is the transformation from the object with the geometry node
 modifier to the object passed to `Object Info`.
 
-
 # Geometry Teleportation
 Here we actualy don't have so conventional a solution in Blender. There is a rough set
 of things that needs to be done before this is working.
 
-1. Divide the mesh into geometry that should stay and geometry that should be portaled.
-2. Make the portaled geometry disappear at the in portal and appear at the out portal.
+1. Divide the mesh into geometry that should stay and geometry that should be portaled. (hard)
+2. Make the portaled geometry disappear at the in portal and appear at the out portal. (easy)
 
 ## Divide Geometry
 Step one is a bit troublesome because we want our portals to work for static renders. And
@@ -241,18 +254,157 @@ everything on the other side of the plane is moved. That is not flexible enough 
 normal and then the geometry past the face which lies inside of the prism is
 what we want to transport.
 
-2. For fully connected meshes we can select the edges that intersect with the portal face
-then grow the selection "as much as we can."
+2. For fully connected meshes we can select the edges that intersect with the
+portal face then isolate mesh components which lie on either side of the portal.
 
-Both have drawbacks. The first is problematic because it allows for the object to enter the portal from behind potentially even if it is not touching the portal face,
-and the second is likely to be a very computationally expensive, requires source code modification/complex or hacky geometry node use. And both have upsides, the first is cheap to compute and easy to implement 
-And the second will produce excellent results.
+Approach #1 is not it for me. To isolate all the mesh in a volume the initial
+instinct would be to do a mesh intersection. Except the problem with that is
+that it will nuke your mesh attributes because it may be the case that non of
+the vertices after the intersection was in the original mesh. And so to play
+nice with shading we need to restrict ourselves to mesh differences. And now
+considering the approach I suppose you could do a cut by making your volume and
+flipping the faces on it and going through each face and doing a boolean
+difference (after making sure you join the original planar face back to the
+extrusion flipped correctly, convex-hull is a one node solution to this but
+fixing the geometry manually isn't much a hassle either and is faster ), but
+that would be incredibly slow unless you implement the difference yourself and
+just delete edges from the mesh. Which in that case would make the final mesh
+pieces appear pretty jagged near the portal surface and would not be a viable
+solution for meshes with little geometry.
 
-I'm going to go with the first and allow users to animate the depth property on each individual object to allow for teleporting or not teleporting the object.
+I went with approach #2. Cut the mesh in half, isolate the islands that are left
+on the other side of the portal and move them to the out portal. Unfortunatly mesh
+slow&mdash;like really really slow. Luckily Blender 4.5 introduces a solver optimized
+for booleans of manifold meshes which is significantly faster. So I have basically two
+versions of my mesh portal nodes. A fast one for manifold geometry and a significantly
+slower one which is set to use the exact boolean solver.
 
-## Teleport Geometry 
-The best way to do this probably depends on the mesh type and portal set up. The best results will probably be achieved with an intersection boolean modifier, 
-For dense meshes, it will likely be best to instance the object and on the instances if possible change the faces we want to be hidden to use the transparent BSDF shader.
-Potentially a simple delete geometry might be solution as well.
+The rough template looks like this:
+```swift
+@nodeGroup
+func cutGeometryWithSurface(
+    geometry: Geometry,
+    surface: Object,
+) -> Geometry {
+    // This is the smallest I could get without breakage. But that was probably
+    // because I set my merge distance to 0.001 also.
+    let cutWidth = 0.001;
+    let surfaceInfo = objectInfo(surface)
 
-I'm going to go with intersection because it is the most robust solution in the general case (e.g. it allows properly transporting the default cube).
+    // Build the cutting cylinder.
+    let cylinder: Geometry = transformGeometry(
+        // NOTE: Pay attention to all here when in the context of manifold portal.
+        // If we don't merge globally we'll get holes.
+        geometry: mergeByDistance(
+            mode: .all,
+            distance: 0.001,
+            geometry: joinGeometry(geometry: [flipFaces(mesh: surfaceInfo.geometry), extrudeMesh(mesh: surfaceInfo.geometry, offsetScale: cutWidth)])
+        ),
+        translation: combineXYZ(z: cutWidth / -2.0).rotateVector(rotation: surfaceInfo.rotation),
+    )
+
+    // If we have non manifold geometry we can just swap the solver.
+    // Unfortunately I would need to duplicate the node and add logic for this.
+    // And I don't want to do that <(｀^´)>
+    return meshBoolean(
+        operation: .difference,
+        solver: .manifold,
+        mesh1: geometry,
+        mesh2: cylinder,
+    )
+}
+```
+
+Ok so we have cut the mesh like a hot metal ruler cuts through air. Now we need
+to consider the disjoint pieces of the mesh and decide which pieces should be
+moved. The obvious thing to do is just find chunks of geometry whose vertices
+are all past the portal surface. But we should be specific about what "past"
+means.
+
+The most basic past means on a certain side of the plane containing the portal
+surface. Using this definition of past though would result in the mesh being
+transported to the out portal whenever the modifier is active. We could
+constrain ourselves a little bit and say that the closest point to the plane
+must lie within the portal boundary and the offset from that point to our vertex
+must be normal to the plane. That would give you an approach #1 flavoured result
+where all the vertices of the mesh piece would need to be within an infinetly
+extruded prism along the portal normal. That's pretty easy to do with Geometry
+Proximity. You could also require that at least one vertex is within a certain
+distance of the portal. Or say that all the vertices of the mesh must have a
+certain weight in a given vertex group as I suggested earlier.
+
+The criteria you chouse of course depends on the use case. I'm trying to go generic. So I'll only use the most generic criteria: all your vertices are on
+a certain side of the plane.
+
+```swift
+@nodeGroup
+func signedDistanceFromPlane(
+    planeNormal: Vec3,
+    pointOnPlane: Vec3,
+    vector: Vec3,
+) -> float {
+    return planeNormal.dot(vector) - planeNormal.dot(pointOnPlane)
+}
+
+@geometryNodes
+func portalManifoldObject(
+    geometry: Geometry,
+    position: Position,
+    meshIsland: MeshIsland,
+    inPortal: Object,
+    outPortal: Object,
+) -> Geometry {
+    let inPortalInfo = objectInfo(object: inPortal, transformSpace: .relative)
+    let inPortalNormal = vec3(z: 1.0).rotateVector(rotation: inPortalInfo.rotation)
+
+    let dist = signedDistanceFromPlane(
+        planeNormal: inPortalNormal,
+        pointOnPlane: inPortalInfo.location,
+        // I didn't actually use the evaluate on domain, this is just for clarity
+        vector: evaluateOnDomain(type: .vector, domain: .point, value: position)
+    )
+
+    let criteria = accumulateField(
+        type: .float
+        domain: .point,
+        value: dist < 0.0 && notEqual(A: dist, B: 0.0, epsilon: 0.01),
+        groupId: meshIsland.islandIndex,
+    )
+
+    let pieces = separateGeometry(
+        geometry: cutGeometryWithSurface(geometry: geometry, surface: inPortal),
+        selection: criteria,
+    )
+
+    return joinGeometry([
+        relativeTransformGeometry(fromObject: inPortal, toObject: outPortal, geometry: pieces.selected),
+        pieces.inverted,
+    ])
+}
+```
+
+## Portal Geometry
+
+This is trivially easy compared to division and on a nice note since we're in
+geometry nodes now we can actually use matrices which makes our transform
+really nice:
+
+```swift
+@nodeGroup
+func relativeTransformGeometry(
+    fromObject: Object,
+    toObject: Object,
+    geometry: Geometry,
+) -> Geometry {
+    let selfToFrom = objectInfo(transformSpace: .relative, object: fromObject).transform
+    let selfToTo = objectInfo(transformSpace: .relative, object: toObject).transform
+
+    // I wrote it like this to be clear about the argument order for the
+    // node. Order is as you would expect, with (mat0, mat1) -> mat0 * mat1
+    return multiplyMatrices(
+        selfToTo, invertMatrix(selfToFrom).matrix,
+    )
+}
+```
+
+And that is about all.
