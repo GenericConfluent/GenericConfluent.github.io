@@ -1,5 +1,6 @@
 +++
 date = '2025-08-06T10:12:09-06:00'
+updated = '2025-08-15T12:53:41-06:00'
 title = 'Blender Portal'
 description = "Quest for a decent portal setup in blender. No stylization, just infinite recursion and mesh teleporation."
 tags = ['blender', 'math', 'effects']
