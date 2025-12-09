@@ -7,6 +7,8 @@ tags = ['blender', 'math', 'effects']
 draft = false
 +++
 
+{{ img(id="/blog/blender-portal/result.gif") }}
+
 I somehow decided to implement a portal in blender, and a proper explanation of
 the theory surrounding the implementation details seemed quite lacking&mdash;and
 I like to have a concrete handle on what I'm doing when I work on something. So
@@ -61,6 +63,7 @@ It turns out that offsetting the exiting ray from the out portal with the normal
 is a very good idea because it ensures that the cycles doesn't think the ray hit
 the portal the next time it is supposed to be moving.
 
+{{ img(id="/blog/blender-portal/portal-store-transform.svg") }}
 
 ```swift
 @geometryNode
@@ -124,6 +127,9 @@ My version of both of these is slightly different from the tutorial video I
 linked to above. I only store relative transforms because that's all you really
 need, and also I modified the position transform to accomodate my need to
 support portal scaling.
+
+
+{{ img(id="/blog/blender-portal/portal-material-nodes.svg") }}
 
 ```swift
 // It would be really nice if this was just a shader node. Or you could do matrix
@@ -281,6 +287,8 @@ versions of my mesh portal nodes. A fast one for manifold geometry and a signifi
 slower one which is set to use the exact boolean solver.
 
 The rough template looks like this:
+{{ img(id="/blog/blender-portal/portal-cut-geometry.svg") }}
+
 ```swift
 @nodeGroup
 func cutGeometryWithSurface(
@@ -337,6 +345,8 @@ certain weight in a given vertex group as I suggested earlier.
 The criteria you chouse of course depends on the use case. I'm trying to go generic. So I'll only use the most generic criteria: all your vertices are on
 a certain side of the plane.
 
+{{ img(id="/blog/blender-portal/group-signed-distance.svg") }}
+{{ img(id="/blog/blender-portal/portal-teleport-geometry.svg") }}
 ```swift
 @nodeGroup
 func signedDistanceFromPlane(
@@ -390,6 +400,7 @@ This is trivially easy compared to division and on a nice note since we're in
 geometry nodes now we can actually use matrices which makes our transform
 really nice:
 
+{{ img(id="/blog/blender-portal/transform-relative-geometry.svg") }}
 ```swift
 @nodeGroup
 func relativeTransformGeometry(
