@@ -132,25 +132,6 @@ support portal scaling.
 {{ img(id="/blog/blender-portal/portal-material-nodes.svg") }}
 
 ```swift
-// It would be really nice if this was just a shader node. Or you could do matrix
-// multiplication, a fundamental operation in GPU-land which is somehow not a concept
-// in Blenders shader nodes.
-func transformVector(
-    vector: Vec3,
-    scale: Vec3,
-    rotate: Vec3,
-    translate: Vec3,
-    worldPosition: Vec3,
-) -> Vec3 {
-    return ((vector - worldPosition) * scale)
-        .vectorRotate(
-            type: .euler,
-            invert: false,
-            center: Vec3.zero,
-            rotation: rotate,
-        ) + translate + worldPosition
-}
-
 @shader
 func portal(
     geometry: Geometry,
@@ -161,7 +142,7 @@ func portal(
     let rotateToOther: Vec3 = attributes.geometry("rotate_to_other")
     let scaleToOther: Vec3 = attributes.geometry("scale_to_other")
 
-    let normalCorrection: Vec3 = geometry.normal * geometry.normal.dot(geometry.incoming).sign() * -0.0001
+    let normalCorrection: Vec3 = -0.001 * geometry.normal
 
     // Direction ray should exit out-portal.
     let exitDirection = -1.0 * geometry.incoming
@@ -172,13 +153,13 @@ func portal(
             rotation: rotateToOther
         )
 
-    // Location ray should exit out-portal.
-    let exitPosition = transformVector(
+    // Location of the ray on the output portal surface
+    let exitPosition = mapping(
+        type: .point,
         vector: geometry.position + normalCorrection,
+        location: offsetToOther,
+        rotation: rotateToOther,
         scale: scaleToOther,
-        rotate: rotateToOther,
-        translate: offsetToOther,
-        worldPosition: objectInfo.location,
     )
 
     // Move the ray and change direction

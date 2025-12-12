@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1685.050048828125" height="962.2742553710938" viewBox="-1549.6220703125 -508.0948181152344 1685.050048828125 962.2742553710938">
+<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1727.1788024902344" height="851.4692474365235" viewBox="-1549.6220703125 -508.0948181152344 1727.1788024902344 851.4692474365235">
   <defs>
     <style>
 			text { font-family: sans-serif, arial; font-size: 10px; fill: rgb(230,230,230) }
@@ -32,6 +32,7 @@
 			.marker .boolean { fill: #cca6d6 }
 			.marker .vector { fill: #6363c7 }
 			.marker .rotation { fill: #ff00ff }
+			.marker .matrix { fill: #b46db4 }
 			.marker .menu { fill: #666666 }
 			.marker .string { fill: #70b2ff }
 			.marker .rgba { fill: #c7c729 }
@@ -63,20 +64,16 @@
       <polyline points="2 5 5 8 8 5" class="arrow" />
     </symbol>
   </defs>
-  <g transform="translate(-1169.29296875,53.763572692871094)">
-    <rect x="0" y="0" width="625.2894897460938" height="390.4158645629883" rx="5px" style="fill:black;stroke:none;opacity:0.8" />
-    <text x="312.6447448730469" y="16" text-anchor="middle">Compute Output Direction</text>
+  <g transform="translate(-1276.010009765625,43.28092956542969)">
+    <rect x="0" y="0" width="684.9312744140625" height="290.0934997558594" rx="5px" style="fill:black;stroke:none;opacity:0.8" />
+    <text x="342.46563720703125" y="16" text-anchor="middle">Compute Output Direction</text>
   </g>
-  <path d="M -1427.6220703125,-231.56563720703124 C -1216.137060546875,-231.56563720703124 -1110.3945556640624,183.0635726928711 -898.9095458984375,183.0635726928711" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -1427.6220703125,-231.56563720703124 C -1216.137060546875,-231.56563720703124 -1110.3945556640624,183.0635726928711 -898.9095458984375,183.0635726928711" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -988.67158203125,300.6794372558594 C -952.7667675781249,300.6794372558594 -934.8143603515625,274.2635726928711 -898.9095458984375,274.2635726928711" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -988.67158203125,300.6794372558594 C -952.7667675781249,300.6794372558594 -934.8143603515625,274.2635726928711 -898.9095458984375,274.2635726928711" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -574.0034790039062,171.60720825195312 C -451.8556762695313,171.60720825195312 -390.7817749023437,62.15012207031248 -268.63397216796875,62.15012207031248" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -574.0034790039062,171.60720825195312 C -451.8556762695313,171.60720825195312 -390.7817749023437,62.15012207031248 -268.63397216796875,62.15012207031248" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -786.9095458984375,118.2635726928711 C -746.547119140625,118.2635726928711 -726.3659057617188,214.8072082519531 -686.0034790039062,214.8072082519531" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -786.9095458984375,118.2635726928711 C -746.547119140625,118.2635726928711 -726.3659057617188,214.8072082519531 -686.0034790039062,214.8072082519531" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -156.63397216796875,-180.2498779296875 C -88.60919189453125,-180.2498779296875 -54.5968017578125,-184.6632293701172 13.427978515625,-184.6632293701172" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -156.63397216796875,-180.2498779296875 C -88.60919189453125,-180.2498779296875 -54.5968017578125,-184.6632293701172 13.427978515625,-184.6632293701172" style="stroke:#633763;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -1095.388623046875,189.87442932128906 C -1025.560712890625,189.87442932128906 -990.6467578125,263.7809295654297 -920.81884765625,263.7809295654297" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -1095.388623046875,189.87442932128906 C -1025.560712890625,189.87442932128906 -990.6467578125,263.7809295654297 -920.81884765625,263.7809295654297" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -621.0787353515625,149.3143081665039 C -444.1738403320312,149.3143081665039 -355.72139282226567,78.06967773437498 -178.81649780273438,78.06967773437498" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -621.0787353515625,149.3143081665039 C -444.1738403320312,149.3143081665039 -355.72139282226567,78.06967773437498 -178.81649780273438,78.06967773437498" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -66.81649780273438,-164.330322265625 C -17.86720581054687,-164.330322265625 6.607440185546871,-168.74365844726563 55.556732177734375,-168.74365844726563" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -66.81649780273438,-164.330322265625 C -17.86720581054687,-164.330322265625 6.607440185546871,-168.74365844726563 55.556732177734375,-168.74365844726563" style="stroke:#633763;stroke-width:2;fill:none;opacity:1" />
   <path d="M -1427.6220703125,-296.3656372070312 C -1325.253564453125,-296.3656372070312 -1274.0693115234376,-254.97578125 -1171.7008056640625,-254.97578125" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
   <path d="M -1427.6220703125,-296.3656372070312 C -1325.253564453125,-296.3656372070312 -1274.0693115234376,-254.97578125 -1171.7008056640625,-254.97578125" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
   <path d="M -1427.6220703125,-317.96563720703125 C -1227.38056640625,-317.96563720703125 -1127.259814453125,-420.3948181152344 -927.018310546875,-420.3948181152344" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
@@ -87,14 +84,18 @@
   <path d="M -780.6318481445312,-306.0677185058594 C -693.3950024414062,-306.0677185058594 -649.7765795898438,-256.995654296875 -562.5397338867188,-256.995654296875" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
   <path d="M -782.3136596679688,-184.9954071044922 C -694.4040893554687,-184.9954071044922 -650.4493041992188,-235.395654296875 -562.5397338867188,-235.395654296875" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
   <path d="M -782.3136596679688,-184.9954071044922 C -694.4040893554687,-184.9954071044922 -650.4493041992188,-235.395654296875 -562.5397338867188,-235.395654296875" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -779.89150390625,-62.023353576660156 C -692.9507958984375,-62.023353576660156 -649.4804418945313,-213.795654296875 -562.5397338867188,-213.795654296875" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -779.89150390625,-62.023353576660156 C -692.9507958984375,-62.023353576660156 -649.4804418945313,-213.795654296875 -562.5397338867188,-213.795654296875" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <path d="M -450.53973388671875,-321.795654296875 C -377.7774291992188,-321.795654296875 -341.3962768554687,40.55012207031248 -268.63397216796875,40.55012207031248" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
-  <path d="M -450.53973388671875,-321.795654296875 C -377.7774291992188,-321.795654296875 -341.3962768554687,40.55012207031248 -268.63397216796875,40.55012207031248" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -450.53973388671875,-321.795654296875 C -341.850439453125,-321.795654296875 -287.50579223632815,56.46967773437498 -178.81649780273438,56.46967773437498" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -450.53973388671875,-321.795654296875 C -341.850439453125,-321.795654296875 -287.50579223632815,56.46967773437498 -178.81649780273438,56.46967773437498" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
   <path d="M -1059.7008056640625,-298.17578125 C -1006.6278076171875,-298.17578125 -980.09130859375,-398.79481811523436 -927.018310546875,-398.79481811523436" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
   <path d="M -1059.7008056640625,-298.17578125 C -1006.6278076171875,-298.17578125 -980.09130859375,-398.79481811523436 -927.018310546875,-398.79481811523436" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
-  <g transform="translate(13.427978515625,-240.7632293701172)" id="Material_Output" class="spec_node">
-    <metadata>{"type": "ShaderNodeOutputMaterial", "x": 13.427978515625, "y": 240.7632293701172}</metadata>
+  <path d="M -777.3003784179688,-63.15467834472656 C -691.3961206054687,-63.15467834472656 -648.4439916992187,-213.795654296875 -562.5397338867188,-213.795654296875" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -777.3003784179688,-63.15467834472656 C -691.3961206054687,-63.15467834472656 -648.4439916992187,-213.795654296875 -562.5397338867188,-213.795654296875" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -1427.6220703125,-231.56563720703124 C -1224.90078125,-231.56563720703124 -1123.54013671875,172.5809295654297 -920.81884765625,172.5809295654297" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -1427.6220703125,-231.56563720703124 C -1224.90078125,-231.56563720703124 -1123.54013671875,172.5809295654297 -920.81884765625,172.5809295654297" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -808.81884765625,107.78092956542969 C -778.522802734375,107.78092956542969 -763.3747802734375,192.5143081665039 -733.0787353515625,192.5143081665039" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -808.81884765625,107.78092956542969 C -778.522802734375,107.78092956542969 -763.3747802734375,192.5143081665039 -733.0787353515625,192.5143081665039" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <g transform="translate(55.556732177734375,-224.84365844726562)" id="Material_Output" class="spec_node">
+    <metadata>{"type": "ShaderNodeOutputMaterial", "x": 55.556732177734375, "y": 224.84365844726562}</metadata>
     <clipPath id="Material_Output_super_clip">
       <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
   </clipPath>
@@ -159,8 +160,8 @@
     </g>
     <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(-268.63397216796875,-214.7498779296875)" id="Ray_Portal_BSDF" class="spec_node">
-    <metadata>{"type": "ShaderNodeBsdfRayPortal", "x": -268.63397216796875, "y": 214.7498779296875}</metadata>
+  <g transform="translate(-178.81649780273438,-198.830322265625)" id="Ray_Portal_BSDF" class="spec_node">
+    <metadata>{"type": "ShaderNodeBsdfRayPortal", "x": -178.81649780273438, "y": 198.830322265625}</metadata>
     <clipPath id="Ray_Portal_BSDF_super_clip">
       <rect width="112.0" height="304.0" rx="5px" style="fill:none" />
   </clipPath>
@@ -380,8 +381,8 @@
     </g>
     <rect width="112.0" height="234.39999999999998" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(-937.276123046875,-96.52335357666016)" id="Attribute.002" class="spec_node">
-    <metadata>{"type": "ShaderNodeAttribute", "x": -937.276123046875, "y": 96.52335357666016}</metadata>
+  <g transform="translate(-934.6849975585938,-97.65467834472656)" id="Attribute.002" class="spec_node">
+    <metadata>{"type": "ShaderNodeAttribute", "x": -934.6849975585938, "y": 97.65467834472656}</metadata>
     <clipPath id="Attribute.002_super_clip">
       <rect width="157.384619140625" height="104.80000000000001" rx="5px" style="fill:none" />
   </clipPath>
@@ -886,8 +887,8 @@
     </g>
     <rect width="112.0" height="169.6" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(-686.0034790039062,137.10720825195312)" id="Vector_Math" class="spec_node">
-    <metadata>{"type": "ShaderNodeVectorMath", "x": -686.0034790039062, "y": -137.10720825195312}</metadata>
+  <g transform="translate(-733.0787353515625,114.8143081665039)" id="Vector_Math" class="spec_node">
+    <metadata>{"type": "ShaderNodeVectorMath", "x": -733.0787353515625, "y": -114.8143081665039}</metadata>
     <clipPath id="Vector_Math_super_clip">
       <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
   </clipPath>
@@ -960,8 +961,8 @@
     </g>
     <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(-1139.29296875,244.57943725585938)" id="Attribute" class="spec_node">
-    <metadata>{"type": "ShaderNodeAttribute", "x": -1139.29296875, "y": -244.57943725585938}</metadata>
+  <g transform="translate(-1246.010009765625,133.77442932128906)" id="Attribute" class="spec_node">
+    <metadata>{"type": "ShaderNodeAttribute", "x": -1246.010009765625, "y": -133.77442932128906}</metadata>
     <clipPath id="Attribute_super_clip">
       <rect width="150.62138671875002" height="169.6" rx="5px" style="fill:none" />
   </clipPath>
@@ -1031,7 +1032,7 @@
                   <rect x="0" y="0" width="81.44120187500002" height="16" rx="3px" />
                 </clipPath>
                 <g class="label" clip-path="url(#Attribute_4_labeled_dropdown_dropdown_label_clip) " id="Attribute_4_labeled_dropdown_dropdown_label_g">
-                  <text y="11" x="0">Instancer</text>
+                  <text y="11" x="0">Geometry</text>
                 </g>
               </g>
             </g>
@@ -1079,8 +1080,8 @@
     </g>
     <rect width="150.62138671875002" height="169.6" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(-898.9095458984375,83.7635726928711)" id="Vector_Rotate" class="spec_node">
-    <metadata>{"type": "ShaderNodeVectorRotate", "x": -898.9095458984375, "y": -83.7635726928711}</metadata>
+  <g transform="translate(-920.81884765625,73.28092956542969)" id="Vector_Rotate" class="spec_node">
+    <metadata>{"type": "ShaderNodeVectorRotate", "x": -920.81884765625, "y": -73.28092956542969}</metadata>
     <clipPath id="Vector_Rotate_super_clip">
       <rect width="112.0" height="217.6" rx="5px" style="fill:none" />
   </clipPath>
@@ -1255,28 +1256,28 @@
     </g>
     <rect width="112.0" height="217.6" rx="5px" style="fill:none" />
   </g>
-  <g transform="translate(9.427978515625,-188.6632293701172)" class="marker">
+  <g transform="translate(51.556732177734375,-172.74365844726563)" class="marker">
     <use href="#marker_circle" class="shader" />
   </g>
-  <g transform="translate(9.427978515625,-167.0632293701172)" class="marker">
+  <g transform="translate(51.556732177734375,-151.14365844726564)" class="marker">
     <use href="#marker_circle" class="shader" />
   </g>
-  <g transform="translate(9.427978515625,-145.46322937011718)" class="marker">
+  <g transform="translate(51.556732177734375,-129.5436584472656)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(9.427978515625,-123.86322937011718)" class="marker">
+  <g transform="translate(51.556732177734375,-107.94365844726562)" class="marker">
     <use href="#marker_circle" class="value" />
   </g>
-  <g transform="translate(-160.63397216796875,-184.2498779296875)" class="marker">
+  <g transform="translate(-70.81649780273438,-168.330322265625)" class="marker">
     <use href="#marker_circle" class="shader" />
   </g>
-  <g transform="translate(-272.63397216796875,14.950122070312489)" class="marker">
+  <g transform="translate(-182.81649780273438,30.86967773437499)" class="marker">
     <use href="#marker_circle" class="rgba" />
   </g>
-  <g transform="translate(-272.63397216796875,36.55012207031248)" class="marker">
+  <g transform="translate(-182.81649780273438,52.46967773437498)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-272.63397216796875,58.15012207031248)" class="marker">
+  <g transform="translate(-182.81649780273438,74.06967773437498)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
   <g transform="translate(-1431.6220703125,-321.96563720703125)" class="marker">
@@ -1306,7 +1307,7 @@
   <g transform="translate(-1431.6220703125,-149.16563720703127)" class="marker">
     <use href="#marker_circle" class="value" />
   </g>
-  <g transform="translate(-783.89150390625,-66.02335357666016)" class="marker">
+  <g transform="translate(-781.3003784179688,-67.15467834472656)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
   <g transform="translate(-786.3136596679688,-188.9954071044922)" class="marker">
@@ -1348,37 +1349,37 @@
   <g transform="translate(-566.5397338867188,-217.795654296875)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-578.0034790039062,167.60720825195312)" class="marker">
+  <g transform="translate(-625.0787353515625,145.3143081665039)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-690.0034790039062,210.8072082519531)" class="marker">
+  <g transform="translate(-737.0787353515625,188.5143081665039)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-690.0034790039062,232.40720825195314)" class="marker">
+  <g transform="translate(-737.0787353515625,210.11430816650392)" class="marker">
     <use href="#marker_circle" class="value" />
   </g>
-  <g transform="translate(-992.67158203125,275.0794372558594)" class="marker">
+  <g transform="translate(-1099.388623046875,164.27442932128906)" class="marker">
     <use href="#marker_circle" class="rgba" />
   </g>
-  <g transform="translate(-992.67158203125,296.6794372558594)" class="marker">
+  <g transform="translate(-1099.388623046875,185.87442932128906)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-992.67158203125,318.27943725585936)" class="marker">
+  <g transform="translate(-1099.388623046875,207.47442932128905)" class="marker">
     <use href="#marker_circle" class="value" />
   </g>
-  <g transform="translate(-992.67158203125,339.8794372558594)" class="marker">
+  <g transform="translate(-1099.388623046875,229.07442932128907)" class="marker">
     <use href="#marker_circle" class="value" />
   </g>
-  <g transform="translate(-790.9095458984375,114.2635726928711)" class="marker">
+  <g transform="translate(-812.81884765625,103.78092956542969)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-902.9095458984375,179.0635726928711)" class="marker">
+  <g transform="translate(-924.81884765625,168.5809295654297)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-902.9095458984375,200.6635726928711)" class="marker">
+  <g transform="translate(-924.81884765625,190.1809295654297)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
-  <g transform="translate(-902.9095458984375,270.2635726928711)" class="marker">
+  <g transform="translate(-924.81884765625,259.7809295654297)" class="marker">
     <use href="#marker_circle" class="vector" />
   </g>
 </svg>
