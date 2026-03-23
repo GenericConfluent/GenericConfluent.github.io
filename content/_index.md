@@ -1,4 +1,12 @@
 +++
+template = 'home.html'
+
+[extra]
+lang = 'en'
+footer = false
+name = "Generic Confluent"
+links = []
+recent = false
 +++
 
 # Welcome

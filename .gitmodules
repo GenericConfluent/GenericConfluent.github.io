@@ -1,3 +1,7 @@
 [submodule "themes/anemone"]
 	path = themes/anemone
 	url = https://github.com/Speyll/anemone
+[submodule "themes/serene"]
+	path = themes/serene
+	url = https://github.com/isunjn/serene.git
+	branch = latest

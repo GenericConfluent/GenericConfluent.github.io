@@ -1,10 +1,10 @@
 # The URL the site will be built for
-base_url = "https://genericconfluent.github.io/"
+base_url = "https://generic-confluent.ca/"
 
 title = "Generic Confluent"
-description = "I am a happy hippopotamus"
+description = "I am a happy hippopotamus."
 
-theme = "anemone"
+theme = "serene"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
@@ -14,17 +14,37 @@ build_search_index = false
 
 
 [markdown]
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = true
+external_links_target_blank = false
+external_links_no_follow = true
+external_links_no_referrer = true
 
-[markdown.math]
-engine = "typst"
-svgo = false
+[markdown.highlighting]
+style = "class"
+light_theme = "github-light"
+dark_theme = "github-dark"
+
+# [markdown.math]
+# engine = "typst"
+# svgo = false
 
 [extra]
-header_nav = [
-    { url = "/", name_en = "/home/" },
-    { url = "/blog", name_en = "/blog/" },
-    { url = "/notes", name_en = "/notes/" },
+favicon = "favicon.ico"
+
+sections = [
+    { name = "/blog/", path = "/blog", is_external = false },
+    { name = "/notes/", path = "/notes", is_external = false },
 ]
+blog_section_path = "/blog"
+
+back_link_text = "Back"
+force_theme = false
+
+footer_copyright = "© 2025 Generic Confluent"
+footer_credits = true
+
+not_found_error_text = "404 Not Found"
+not_found_recover_text = "« back to home »"
+
+reaction = false
+reaction_align = "right"
+reaction_endpoint = ""
