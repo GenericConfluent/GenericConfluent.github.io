@@ -4,8 +4,15 @@ template = 'home.html'
 [extra]
 lang = 'en'
 footer = false
-name = "Generic Confluent"
-links = []
+
+name = "Matthew Power"
+id = "GenericConfluent"
+
+links = [
+    { name = "Github", icon = "github", url = "https://github.com/GenericConfluent" },
+    { name = "LinkedIn", icon = "linkedin", url = "https://www.linkedin.com/in/matthew-power-955251222/" },
+    { name = "Email", icon = "email", url = "mailto:m13power@gmail.com" }
+]
 recent = false
 +++
 
