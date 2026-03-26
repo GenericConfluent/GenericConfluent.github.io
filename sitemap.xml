@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://generic-confluent.ca/</loc>
+    </url>
+    <url>
+        <loc>https://generic-confluent.ca/blog/</loc>
+    </url>
+    <url>
+        <loc>https://generic-confluent.ca/blog/blender-portal/</loc>
+        <lastmod>2025-08-15T12:53:41-06:00</lastmod>
+    </url>
+    <url>
+        <loc>https://generic-confluent.ca/blog/worst-compression/</loc>
+        <lastmod>2025-08-15T20:18:10-06:00</lastmod>
+    </url>
+    <url>
+        <loc>https://generic-confluent.ca/notes/</loc>
+    </url>
+</urlset>

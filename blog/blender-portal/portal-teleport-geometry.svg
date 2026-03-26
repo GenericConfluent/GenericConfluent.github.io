@@ -1,0 +1,1251 @@
+<?xml version='1.0' encoding='utf-8'?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3050.0473022460938" height="833.9159942626953" viewBox="-846.2326049804688 -74.01979064941406 3050.0473022460938 833.9159942626953">
+  <defs>
+    <style>
+			text { font-family: sans-serif, arial; font-size: 10px; fill: rgb(230,230,230) }
+			text { font-family: sans-serif, arial; font-size: 10px; fill: rgb(230,230,230) }
+			.string text { fill: rgb(230,230,230) }
+			.bool_true  text { fill: rgb(255,255,255) }
+			.bool_false text { fill: rgb(230,230,230) }
+			.dropdown text { fill: rgb(230,230,230) }
+			.value text { fill: rgb(230,230,230) }
+			.corner_l { rx:5 }
+			.corner_s { rx:3px }
+			rect { stroke-width:0.30000001192092896;stroke:rgb(0,0,0) }
+			.nodeframe { fill:rgb(48,48,48) } 
+			.marker { stroke-width: 1px; stroke: black}
+			.arrow { stroke-width: 1; stroke: white; fill:none}
+			.checkmark { stroke:rgb(255,255,255) } 
+			.bool_false {fill:rgb(84,84,84)}
+			.bool_true  {fill:rgb(71,114,179)}
+			.value_bar {fill:rgb(84,84,84)}
+			.progress_bar {fill:rgb(71,114,179)}
+			.string { fill:rgb(29,29,29)}
+			.dropdown { fill:rgb(40,40,40)}
+			.axis_x {stroke:rgb(255,51,82)}
+			.axis_y {stroke:rgb(139,220,0)}
+			.axis_z {stroke:rgb(40,144,255)}
+			.axis_w {stroke:black}
+			.marker .generic { fill: #ffffff }
+			.marker .custom { fill: #333333 }
+			.marker .value { fill: #a1a1a1 }
+			.marker .int { fill: #598c5c }
+			.marker .boolean { fill: #cca6d6 }
+			.marker .vector { fill: #6363c7 }
+			.marker .rotation { fill: #ff00ff }
+			.marker .matrix { fill: #b46db4 }
+			.marker .menu { fill: #666666 }
+			.marker .string { fill: #70b2ff }
+			.marker .rgba { fill: #c7c729 }
+			.marker .shader { fill: #633763 }
+			.marker .object { fill: #ed9e5c }
+			.marker .image { fill: #633863 }
+			.marker .geometry { fill: #00d6a3 }
+			.marker .collection { fill: #f5f5f5 }
+			.marker .texture { fill: #9e4fa3 }
+			.marker .material { fill: #eb7582 }
+			.bg { stroke-width: 0; fill:rgb(26,26,26)}
+			</style>
+    <symbol id="marker_circle">
+      <circle cx="4.0" cy="4.0" r="3.5" class="marker" />
+    </symbol>
+    <symbol id="marker_square">
+      <rect x="0" y="0" width="7" height="7" class="marker" />
+    </symbol>
+    <symbol id="marker_diamond">
+      <polygon points="                            0.5 4.0                             4.0 0.5                             7.5 4.0                             4.0 7.5                             " class="marker" />
+    </symbol>
+    <symbol id="marker_dot">
+      <circle cx="4.0" cy="4.0" r="1" class="marker_dot" />
+    </symbol>
+    <symbol id="right_arrow">
+      <polyline points="5 2 8 5 5 8" class="arrow" />
+    </symbol>
+    <symbol id="down_arrow">
+      <polyline points="2 5 5 8 8 5" class="arrow" />
+    </symbol>
+  </defs>
+  <g transform="translate(-615.559814453125,245.5074462890625)">
+    <rect x="0" y="0" width="410.04608154296875" height="377.83027343749995" rx="5px" style="fill:black;stroke:none;opacity:0.8" />
+    <text x="205.02304077148438" y="16" text-anchor="middle">InPortal Normal</text>
+  </g>
+  <g transform="translate(343.1322326660156,313.65484619140625)">
+    <rect x="0" y="0" width="611.5373229980469" height="436.241357421875" rx="5px" style="fill:black;stroke:none;opacity:0.8" />
+    <text x="305.76866149902344" y="16" text-anchor="middle">Mesh Islands With All Vertices Below Plane Ignore On Plane</text>
+  </g>
+  <path d="M -724.2326049804688,125.99544830322266 C 145.2719604492188,125.99544830322266 580.0242431640625,116.60463256835938 1449.52880859375,116.60463256835938" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,125.99544830322266 C 145.2719604492188,125.99544830322266 580.0242431640625,116.60463256835938 1449.52880859375,116.60463256835938" style="stroke:#ed9e5c;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C 145.2719604492188,104.39544830322265 580.0242431640625,95.00463256835937 1449.52880859375,95.00463256835937" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C 145.2719604492188,104.39544830322265 580.0242431640625,95.00463256835937 1449.52880859375,95.00463256835937" style="stroke:#ed9e5c;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 1313.577392578125,265.5305938720703 C 1367.957958984375,265.5305938720703 1395.1482421875,138.2046325683594 1449.52880859375,138.2046325683594" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 1313.577392578125,265.5305938720703 C 1367.957958984375,265.5305938720703 1395.1482421875,138.2046325683594 1449.52880859375,138.2046325683594" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 1647.29794921875,73.40463256835938 C 1724.82251953125,73.40463256835938 1763.5848046875,308.9323974609375 1841.109375,308.9323974609375" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 1647.29794921875,73.40463256835938 C 1724.82251953125,73.40463256835938 1763.5848046875,308.9323974609375 1841.109375,308.9323974609375" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 1313.577392578125,287.13059387207034 C 1524.590185546875,287.13059387207034 1630.09658203125,308.9323974609375 1841.109375,308.9323974609375" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 1313.577392578125,287.13059387207034 C 1524.590185546875,287.13059387207034 1630.09658203125,308.9323974609375 1841.109375,308.9323974609375" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 193.38102874755862,-29.519790649414062 C 596.6595742797851,-29.519790649414062 798.2988470458984,330.3305938720703 1201.577392578125,330.3305938720703" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 193.38102874755862,-29.519790649414062 C 596.6595742797851,-29.519790649414062 798.2988470458984,330.3305938720703 1201.577392578125,330.3305938720703" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C -667.8843872070313,104.39544830322265 -639.7102783203125,544.6377197265625 -583.362060546875,544.6377197265625" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C -667.8843872070313,104.39544830322265 -639.7102783203125,544.6377197265625 -583.362060546875,544.6377197265625" style="stroke:#ed9e5c;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -471.362060546875,458.2377197265625 C -421.8227294921875,458.2377197265625 -397.0530639648438,378.3005859375 -347.51373291015625,378.3005859375" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -471.362060546875,458.2377197265625 C -421.8227294921875,458.2377197265625 -397.0530639648438,378.3005859375 -347.51373291015625,378.3005859375" style="stroke:#ff00ff;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -473.559814453125,310.0074462890625 C -423.1413818359375,310.0074462890625 -397.9321655273437,356.7005859375 -347.51373291015625,356.7005859375" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -473.559814453125,310.0074462890625 C -423.1413818359375,310.0074462890625 -397.9321655273437,356.7005859375 -347.51373291015625,356.7005859375" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C -432.4675811767578,104.39544830322265 -286.58506927490237,13.68020935058594 5.179954528808594,13.68020935058594" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,104.39544830322265 C -432.4675811767578,104.39544830322265 -286.58506927490237,13.68020935058594 5.179954528808594,13.68020935058594" style="stroke:#ed9e5c;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,82.79544830322266 C -432.4675811767578,82.79544830322266 -286.58506927490237,-7.919790649414061 5.179954528808594,-7.919790649414061" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -724.2326049804688,82.79544830322266 C -432.4675811767578,82.79544830322266 -286.58506927490237,-7.919790649414061 5.179954528808594,-7.919790649414061" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 698.2376708984375,660.0401611328125 C 744.0104248046875,660.0401611328125 766.8968017578125,606.4309936523438 812.6695556640625,606.4309936523438" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 698.2376708984375,660.0401611328125 C 744.0104248046875,660.0401611328125 766.8968017578125,606.4309936523438 812.6695556640625,606.4309936523438" style="stroke:#598c5c;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 130.77954177856446,460.9138488769531 C 228.47196090698242,460.9138488769531 277.3181704711914,442.95484619140626 375.0105895996094,442.95484619140626" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 130.77954177856446,460.9138488769531 C 228.47196090698242,460.9138488769531 277.3181704711914,442.95484619140626 375.0105895996094,442.95484619140626" style="stroke:#a1a1a1;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 487.0105895996094,378.15484619140625 C 528.9733947753906,378.15484619140625 549.9547973632813,531.2202026367188 591.9176025390625,531.2202026367188" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 487.0105895996094,378.15484619140625 C 528.9733947753906,378.15484619140625 549.9547973632813,531.2202026367188 591.9176025390625,531.2202026367188" style="stroke:#a1a1a1;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 703.9176025390625,488.02020263671875 C 747.4183837890625,488.02020263671875 769.1687744140625,584.8309936523438 812.6695556640625,584.8309936523438" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 703.9176025390625,488.02020263671875 C 747.4183837890625,488.02020263671875 769.1687744140625,584.8309936523438 812.6695556640625,584.8309936523438" style="stroke:#cca6d6;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 485.1322326660156,584.7962036132812 C 527.8463806152344,584.7962036132812 549.2034545898438,552.8202026367187 591.9176025390625,552.8202026367187" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 485.1322326660156,584.7962036132812 C 527.8463806152344,584.7962036132812 549.2034545898438,552.8202026367187 591.9176025390625,552.8202026367187" style="stroke:#cca6d6;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -235.51373291015625,335.1005859375 C -165.82081756591796,335.1005859375 -130.97435989379883,482.51384887695315 -61.28144454956055,482.51384887695315" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -235.51373291015625,335.1005859375 C -165.82081756591796,335.1005859375 -130.97435989379883,482.51384887695315 -61.28144454956055,482.51384887695315" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -471.362060546875,436.6377197265625 C -307.3298141479492,436.6377197265625 -225.31369094848634,504.1138488769531 -61.28144454956055,504.1138488769531" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -471.362060546875,436.6377197265625 C -307.3298141479492,436.6377197265625 -225.31369094848634,504.1138488769531 -61.28144454956055,504.1138488769531" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M -221.9644775390625,689.77392578125 C -157.6912643432617,689.77392578125 -125.55465774536133,525.7138488769531 -61.28144454956055,525.7138488769531" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M -221.9644775390625,689.77392578125 C -157.6912643432617,689.77392578125 -125.55465774536133,525.7138488769531 -61.28144454956055,525.7138488769531" style="stroke:#6363c7;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 130.77954177856446,460.9138488769531 C 227.72061813354492,460.9138488769531 276.1911563110352,649.5962036132812 373.1322326660156,649.5962036132812" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 130.77954177856446,460.9138488769531 C 227.72061813354492,460.9138488769531 276.1911563110352,649.5962036132812 373.1322326660156,649.5962036132812" style="stroke:#a1a1a1;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 1953.109375,287.3323974609375 C 2004.59150390625,287.3323974609375 2030.332568359375,289.1470947265625 2081.814697265625,289.1470947265625" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 1953.109375,287.3323974609375 C 2004.59150390625,287.3323974609375 2030.332568359375,289.1470947265625 2081.814697265625,289.1470947265625" style="stroke:#00d6a3;stroke-width:2;fill:none;opacity:1" />
+  <path d="M 924.6695556640625,520.0309936523438 C 1035.4326904296875,520.0309936523438 1090.8142578125,351.9305938720703 1201.577392578125,351.9305938720703" style="stroke:#000000;stroke-width:4;fill:none;opacity:1" />
+  <path d="M 924.6695556640625,520.0309936523438 C 1035.4326904296875,520.0309936523438 1090.8142578125,351.9305938720703 1201.577392578125,351.9305938720703" style="stroke:#a1a1a1;stroke-width:2;fill:none;opacity:1" />
+  <g transform="translate(-836.2326049804688,48.295448303222656)" id="Group_Input" class="spec_node">
+    <metadata>{"type": "NodeGroupInput", "x": -836.2326049804688, "y": -48.295448303222656}</metadata>
+    <clipPath id="Group_Input_super_clip">
+      <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Group_Input_super_clip)">
+      <g>
+        <rect width="112.0" height="126.4" class="nodeframe" />
+      </g>
+      <g id="Header Group Input">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(55,71,37)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Group Input</text>
+      </g>
+      <g id="Group_Input_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Group_Input_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Input_0_label_clip) " id="Group_Input_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Geometry</text>
+        </g>
+      </g>
+      <g id="Group_Input_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Group_Input_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Input_1_label_clip) " id="Group_Input_1_label_g">
+          <text y="11" text-anchor="end" x="98.56">InPortal</text>
+        </g>
+      </g>
+      <g id="Group_Input_2_label" transform="translate(6.72,69.7)">
+        <clipPath id="Group_Input_2_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Input_2_label_clip) " id="Group_Input_2_label_g">
+          <text y="11" text-anchor="end" x="98.56">OutPortal</text>
+        </g>
+      </g>
+      <g id="Group_Input_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Group_Input_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Input_3_label_clip) " id="Group_Input_3_label_g">
+          <text y="11" text-anchor="end" x="98.56" />
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(2081.814697265625,254.6470947265625)" id="Group_Output" class="spec_node">
+    <metadata>{"type": "NodeGroupOutput", "x": 2081.814697265625, "y": -254.6470947265625}</metadata>
+    <clipPath id="Group_Output_super_clip">
+      <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Group_Output_super_clip)">
+      <g>
+        <rect width="112.0" height="83.2" class="nodeframe" />
+      </g>
+      <g id="Header Group Output">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(55,71,37)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Group Output</text>
+      </g>
+      <g id="Group_Output_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Group_Output_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Output_0_label_clip) " id="Group_Output_0_label_g">
+          <text y="11" x="0">Geometry</text>
+        </g>
+      </g>
+      <g id="Group_Output_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Group_Output_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_Output_1_label_clip) " id="Group_Output_1_label_g">
+          <text y="11" x="0" />
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(1449.52880859375,38.904632568359375)" id="Group" class="spec_node">
+    <metadata>{"type": "GeometryNodeGroup", "x": 1449.52880859375, "y": -38.904632568359375}</metadata>
+    <clipPath id="Group_super_clip">
+      <rect width="197.769140625" height="126.4" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Group_super_clip)">
+      <g>
+        <rect width="197.769140625" height="126.4" class="nodeframe" />
+      </g>
+      <g id="Header Relative Transform Geometry">
+        <rect width="197.769140625" height="20" opacity="1.0" fill="rgb(55,71,37)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Relative Transform Geometry</text>
+      </g>
+      <g id="Group_0_label" transform="translate(11.8661484375,26.5)">
+        <clipPath id="Group_0_label_clip">
+          <rect x="0" y="0" width="174.03684375" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_0_label_clip) " id="Group_0_label_g">
+          <text y="11" text-anchor="end" x="174.03684375">Geometry</text>
+        </g>
+      </g>
+      <g id="Group_1_label" transform="translate(11.8661484375,48.1)">
+        <clipPath id="Group_1_label_clip">
+          <rect x="0" y="0" width="174.03684375" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_1_label_clip) " id="Group_1_label_g">
+          <text y="11" x="0">FromObject</text>
+        </g>
+      </g>
+      <g id="Group_2_label" transform="translate(11.8661484375,69.7)">
+        <clipPath id="Group_2_label_clip">
+          <rect x="0" y="0" width="174.03684375" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_2_label_clip) " id="Group_2_label_g">
+          <text y="11" x="0">ToObject</text>
+        </g>
+      </g>
+      <g id="Group_3_label" transform="translate(11.8661484375,91.30000000000001)">
+        <clipPath id="Group_3_label_clip">
+          <rect x="0" y="0" width="174.03684375" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group_3_label_clip) " id="Group_3_label_g">
+          <text y="11" x="0">Geometry</text>
+        </g>
+      </g>
+    </g>
+    <rect width="197.769140625" height="126.4" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(1201.577392578125,231.0305938720703)" id="Separate_Geometry" class="spec_node">
+    <metadata>{"type": "GeometryNodeSeparateGeometry", "x": 1201.577392578125, "y": -231.0305938720703}</metadata>
+    <clipPath id="Separate_Geometry_super_clip">
+      <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Separate_Geometry_super_clip)">
+      <g>
+        <rect width="112.0" height="148.0" class="nodeframe" />
+      </g>
+      <g id="Header Separate Geometry">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(29,114,94)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Separate Geometry</text>
+      </g>
+      <g id="Separate_Geometry_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Separate_Geometry_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Separate_Geometry_0_label_clip) " id="Separate_Geometry_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Selection</text>
+        </g>
+      </g>
+      <g id="Separate_Geometry_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Separate_Geometry_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Separate_Geometry_1_label_clip) " id="Separate_Geometry_1_label_g">
+          <text y="11" text-anchor="end" x="98.56">Inverted</text>
+        </g>
+      </g>
+      <g id="Separate_Geometry_2_dropdown" transform="translate(6.72,69.7)">
+        <clipPath id="Separate_Geometry_2_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Separate_Geometry_2_dropdown_clip) " id="Separate_Geometry_2_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Separate_Geometry_2_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Separate_Geometry_2_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Separate_Geometry_2_dropdown_label_clip) " id="Separate_Geometry_2_dropdown_label_g">
+              <text y="11" x="0">Point</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Separate_Geometry_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Separate_Geometry_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Separate_Geometry_3_label_clip) " id="Separate_Geometry_3_label_g">
+          <text y="11" x="0">Geometry</text>
+        </g>
+      </g>
+      <g id="Separate_Geometry_4_label" transform="translate(6.72,112.9)">
+        <clipPath id="Separate_Geometry_4_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Separate_Geometry_4_label_clip) " id="Separate_Geometry_4_label_g">
+          <text y="11" x="0">Selection</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(1841.109375,252.8323974609375)" id="Join_Geometry.001" class="spec_node">
+    <metadata>{"type": "GeometryNodeJoinGeometry", "x": 1841.109375, "y": -252.8323974609375}</metadata>
+    <clipPath id="Join_Geometry.001_super_clip">
+      <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Join_Geometry.001_super_clip)">
+      <g>
+        <rect width="112.0" height="83.2" class="nodeframe" />
+      </g>
+      <g id="Header Join Geometry">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(29,114,94)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Join Geometry</text>
+      </g>
+      <g id="Join_Geometry.001_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Join_Geometry.001_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Join_Geometry.001_0_label_clip) " id="Join_Geometry.001_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Geometry</text>
+        </g>
+      </g>
+      <g id="Join_Geometry.001_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Join_Geometry.001_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Join_Geometry.001_1_label_clip) " id="Join_Geometry.001_1_label_g">
+          <text y="11" x="0">Geometry</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(5.179954528808594,-64.01979064941406)" id="Group.001" class="spec_node">
+    <metadata>{"type": "GeometryNodeGroup", "x": 5.179954528808594, "y": 64.01979064941406}</metadata>
+    <clipPath id="Group.001_super_clip">
+      <rect width="188.20107421875002" height="104.80000000000001" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Group.001_super_clip)">
+      <g>
+        <rect width="188.20107421875002" height="104.80000000000001" class="nodeframe" />
+      </g>
+      <g id="Header Cut Geometry With Surface">
+        <rect width="188.20107421875002" height="20" opacity="1.0" fill="rgb(55,71,37)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Cut Geometry With Surface</text>
+      </g>
+      <g id="Group.001_0_label" transform="translate(11.292064453125,26.5)">
+        <clipPath id="Group.001_0_label_clip">
+          <rect x="0" y="0" width="165.6169453125" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.001_0_label_clip) " id="Group.001_0_label_g">
+          <text y="11" text-anchor="end" x="165.6169453125">Geometry</text>
+        </g>
+      </g>
+      <g id="Group.001_1_label" transform="translate(11.292064453125,48.1)">
+        <clipPath id="Group.001_1_label_clip">
+          <rect x="0" y="0" width="165.6169453125" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.001_1_label_clip) " id="Group.001_1_label_g">
+          <text y="11" x="0">Geometry</text>
+        </g>
+      </g>
+      <g id="Group.001_2_label" transform="translate(11.292064453125,69.7)">
+        <clipPath id="Group.001_2_label_clip">
+          <rect x="0" y="0" width="165.6169453125" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.001_2_label_clip) " id="Group.001_2_label_g">
+          <text y="11" x="0">Surface</text>
+        </g>
+      </g>
+    </g>
+    <rect width="188.20107421875002" height="104.80000000000001" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-333.9644775390625,655.27392578125)" id="Position" class="spec_node">
+    <metadata>{"type": "GeometryNodeInputPosition", "x": -333.9644775390625, "y": -655.27392578125}</metadata>
+    <clipPath id="Position_super_clip">
+      <rect width="112.0" height="61.6" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Position_super_clip)">
+      <g>
+        <rect width="112.0" height="61.6" class="nodeframe" />
+      </g>
+      <g id="Header Position">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(130,53,76)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Position</text>
+      </g>
+      <g id="Position_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Position_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Position_0_label_clip) " id="Position_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Position</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="61.6" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-61.28144454956055,426.4138488769531)" id="Group.002" class="spec_node">
+    <metadata>{"type": "GeometryNodeGroup", "x": -61.28144454956055, "y": -426.4138488769531}</metadata>
+    <clipPath id="Group.002_super_clip">
+      <rect width="192.060986328125" height="126.4" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Group.002_super_clip)">
+      <g>
+        <rect width="192.060986328125" height="126.4" class="nodeframe" />
+      </g>
+      <g id="Header Signed Distance From Plane">
+        <rect width="192.060986328125" height="20" opacity="1.0" fill="rgb(55,71,37)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Signed Distance From Plane</text>
+      </g>
+      <g id="Group.002_0_label" transform="translate(11.5236591796875,26.5)">
+        <clipPath id="Group.002_0_label_clip">
+          <rect x="0" y="0" width="169.01366796875" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.002_0_label_clip) " id="Group.002_0_label_g">
+          <text y="11" text-anchor="end" x="169.01366796875">Value</text>
+        </g>
+      </g>
+      <g id="Group.002_1_label" transform="translate(11.5236591796875,48.1)">
+        <clipPath id="Group.002_1_label_clip">
+          <rect x="0" y="0" width="169.01366796875" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.002_1_label_clip) " id="Group.002_1_label_g">
+          <text y="11" x="0">Plane Normal</text>
+        </g>
+      </g>
+      <g id="Group.002_2_label" transform="translate(11.5236591796875,69.7)">
+        <clipPath id="Group.002_2_label_clip">
+          <rect x="0" y="0" width="169.01366796875" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.002_2_label_clip) " id="Group.002_2_label_g">
+          <text y="11" x="0">Point On Plane</text>
+        </g>
+      </g>
+      <g id="Group.002_3_label" transform="translate(11.5236591796875,91.30000000000001)">
+        <clipPath id="Group.002_3_label_clip">
+          <rect x="0" y="0" width="169.01366796875" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Group.002_3_label_clip) " id="Group.002_3_label_g">
+          <text y="11" x="0">Vector</text>
+        </g>
+      </g>
+    </g>
+    <rect width="192.060986328125" height="126.4" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(586.2376708984375,625.5401611328125)" id="Mesh_Island" class="spec_node">
+    <metadata>{"type": "GeometryNodeInputMeshIsland", "x": 586.2376708984375, "y": -625.5401611328125}</metadata>
+    <clipPath id="Mesh_Island_super_clip">
+      <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Mesh_Island_super_clip)">
+      <g>
+        <rect width="112.0" height="83.2" class="nodeframe" />
+      </g>
+      <g id="Header Mesh Island">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(130,53,76)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Mesh Island</text>
+      </g>
+      <g id="Mesh_Island_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Mesh_Island_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Mesh_Island_0_label_clip) " id="Mesh_Island_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Island Index</text>
+        </g>
+      </g>
+      <g id="Mesh_Island_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Mesh_Island_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Mesh_Island_1_label_clip) " id="Mesh_Island_1_label_g">
+          <text y="11" text-anchor="end" x="98.56">Island Count</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="83.2" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(375.0105895996094,343.65484619140625)" id="Math" class="spec_node">
+    <metadata>{"type": "ShaderNodeMath", "x": 375.0105895996094, "y": -343.65484619140625}</metadata>
+    <clipPath id="Math_super_clip">
+      <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Math_super_clip)">
+      <g>
+        <rect width="112.0" height="148.0" class="nodeframe" />
+      </g>
+      <g id="Header Less Than">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(36,98,131)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Less Than</text>
+      </g>
+      <g id="Math_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Math_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Math_0_label_clip) " id="Math_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Value</text>
+        </g>
+      </g>
+      <g id="Math_1_dropdown" transform="translate(6.72,48.1)">
+        <clipPath id="Math_1_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Math_1_dropdown_clip) " id="Math_1_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Math_1_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Math_1_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Math_1_dropdown_label_clip) " id="Math_1_dropdown_label_g">
+              <text y="11" x="0">Less Than</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Math_2_boolean" transform="translate(6.72,69.7)">
+        <clipPath id="Math_2_boolean_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="bool_false" clip-path="url(#Math_2_boolean_clip) " id="Math_2_boolean_g">
+          <rect x="3.2" y="3.2" width="9.6" height="9.6" stroke="none" rx="3px" class="bool_false" />
+          <g id="Math_2_boolean_label" transform="translate(20.9536,0)">
+            <clipPath id="Math_2_boolean_label_clip">
+              <rect x="0" y="0" width="72.6528" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Math_2_boolean_label_clip) " id="Math_2_boolean_label_g">
+              <text y="11" x="0">Clamp</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Math_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Math_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Math_3_label_clip) " id="Math_3_label_g">
+          <text y="11" x="0">Value</text>
+        </g>
+      </g>
+      <g id="Math_4_value" transform="translate(6.72,112.9)">
+        <clipPath id="Math_4_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Math_4_value_clip) " id="Math_4_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Math_4_value_label" transform="translate(15.0,0)">
+            <clipPath id="Math_4_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Math_4_value_label_clip) " id="Math_4_value_label_g">
+              <text y="11" x="0">Value</text>
+            </g>
+          </g>
+          <g id="Math_4_value_label" transform="translate(49.28,0)">
+            <clipPath id="Math_4_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Math_4_value_label_clip) " id="Math_4_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.000</text>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="148.0" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(812.6695556640625,442.33099365234375)" id="Accumulate_Field.002" class="spec_node">
+    <metadata>{"type": "GeometryNodeAccumulateField", "x": 812.6695556640625, "y": -442.33099365234375}</metadata>
+    <clipPath id="Accumulate_Field.002_super_clip">
+      <rect width="112.0" height="191.2" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Accumulate_Field.002_super_clip)">
+      <g>
+        <rect width="112.0" height="191.2" class="nodeframe" />
+      </g>
+      <g id="Header Accumulate Field">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(36,98,131)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Accumulate Field</text>
+      </g>
+      <g id="Accumulate_Field.002_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Accumulate_Field.002_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Accumulate_Field.002_0_label_clip) " id="Accumulate_Field.002_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Leading</text>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Accumulate_Field.002_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Accumulate_Field.002_1_label_clip) " id="Accumulate_Field.002_1_label_g">
+          <text y="11" text-anchor="end" x="98.56">Trailing</text>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_2_label" transform="translate(6.72,69.7)">
+        <clipPath id="Accumulate_Field.002_2_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Accumulate_Field.002_2_label_clip) " id="Accumulate_Field.002_2_label_g">
+          <text y="11" text-anchor="end" x="98.56">Total</text>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_3_dropdown" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Accumulate_Field.002_3_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Accumulate_Field.002_3_dropdown_clip) " id="Accumulate_Field.002_3_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Accumulate_Field.002_3_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Accumulate_Field.002_3_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Accumulate_Field.002_3_dropdown_label_clip) " id="Accumulate_Field.002_3_dropdown_label_g">
+              <text y="11" x="0">Float</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_4_dropdown" transform="translate(6.72,112.9)">
+        <clipPath id="Accumulate_Field.002_4_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Accumulate_Field.002_4_dropdown_clip) " id="Accumulate_Field.002_4_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Accumulate_Field.002_4_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Accumulate_Field.002_4_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Accumulate_Field.002_4_dropdown_label_clip) " id="Accumulate_Field.002_4_dropdown_label_g">
+              <text y="11" x="0">Point</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_5_label" transform="translate(6.72,134.5)">
+        <clipPath id="Accumulate_Field.002_5_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Accumulate_Field.002_5_label_clip) " id="Accumulate_Field.002_5_label_g">
+          <text y="11" x="0">Value</text>
+        </g>
+      </g>
+      <g id="Accumulate_Field.002_6_label" transform="translate(6.72,156.1)">
+        <clipPath id="Accumulate_Field.002_6_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Accumulate_Field.002_6_label_clip) " id="Accumulate_Field.002_6_label_g">
+          <text y="11" x="0">Group ID</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="191.2" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(591.9176025390625,453.52020263671875)" id="Boolean_Math" class="spec_node">
+    <metadata>{"type": "FunctionNodeBooleanMath", "x": 591.9176025390625, "y": -453.52020263671875}</metadata>
+    <clipPath id="Boolean_Math_super_clip">
+      <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Boolean_Math_super_clip)">
+      <g>
+        <rect width="112.0" height="126.4" class="nodeframe" />
+      </g>
+      <g id="Header And">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(36,98,131)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">And</text>
+      </g>
+      <g id="Boolean_Math_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Boolean_Math_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Boolean_Math_0_label_clip) " id="Boolean_Math_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Boolean</text>
+        </g>
+      </g>
+      <g id="Boolean_Math_1_dropdown" transform="translate(6.72,48.1)">
+        <clipPath id="Boolean_Math_1_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Boolean_Math_1_dropdown_clip) " id="Boolean_Math_1_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Boolean_Math_1_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Boolean_Math_1_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Boolean_Math_1_dropdown_label_clip) " id="Boolean_Math_1_dropdown_label_g">
+              <text y="11" x="0">And</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Boolean_Math_2_label" transform="translate(6.72,69.7)">
+        <clipPath id="Boolean_Math_2_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Boolean_Math_2_label_clip) " id="Boolean_Math_2_label_g">
+          <text y="11" x="0">Boolean</text>
+        </g>
+      </g>
+      <g id="Boolean_Math_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Boolean_Math_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Boolean_Math_3_label_clip) " id="Boolean_Math_3_label_g">
+          <text y="11" x="0">Boolean</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(373.1322326660156,550.2962036132812)" id="Compare.001" class="spec_node">
+    <metadata>{"type": "FunctionNodeCompare", "x": 373.1322326660156, "y": -550.2962036132812}</metadata>
+    <clipPath id="Compare.001_super_clip">
+      <rect width="112.0" height="169.6" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Compare.001_super_clip)">
+      <g>
+        <rect width="112.0" height="169.6" class="nodeframe" />
+      </g>
+      <g id="Header Not Equal">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(36,98,131)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Not Equal</text>
+      </g>
+      <g id="Compare.001_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Compare.001_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Compare.001_0_label_clip) " id="Compare.001_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Result</text>
+        </g>
+      </g>
+      <g id="Compare.001_1_dropdown" transform="translate(6.72,48.1)">
+        <clipPath id="Compare.001_1_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Compare.001_1_dropdown_clip) " id="Compare.001_1_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Compare.001_1_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Compare.001_1_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_1_dropdown_label_clip) " id="Compare.001_1_dropdown_label_g">
+              <text y="11" x="0">Float</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Compare.001_2_dropdown" transform="translate(6.72,69.7)">
+        <clipPath id="Compare.001_2_dropdown_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="dropdown" clip-path="url(#Compare.001_2_dropdown_clip) " id="Compare.001_2_dropdown_g">
+          <rect x="0" y="0" width="98.56" height="16" class="dropdown" />
+          <use href="#down_arrow" x="78.56" y="2.0" />
+          <g id="Compare.001_2_dropdown_label" transform="translate(5.9136,0)">
+            <clipPath id="Compare.001_2_dropdown_label_clip">
+              <rect x="0" y="0" width="86.7328" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_2_dropdown_label_clip) " id="Compare.001_2_dropdown_label_g">
+              <text y="11" x="0">Not Equal</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Compare.001_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Compare.001_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Compare.001_3_label_clip) " id="Compare.001_3_label_g">
+          <text y="11" x="0">A</text>
+        </g>
+      </g>
+      <g id="Compare.001_4_value" transform="translate(6.72,112.9)">
+        <clipPath id="Compare.001_4_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Compare.001_4_value_clip) " id="Compare.001_4_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Compare.001_4_value_label" transform="translate(15.0,0)">
+            <clipPath id="Compare.001_4_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_4_value_label_clip) " id="Compare.001_4_value_label_g">
+              <text y="11" x="0">B</text>
+            </g>
+          </g>
+          <g id="Compare.001_4_value_label" transform="translate(49.28,0)">
+            <clipPath id="Compare.001_4_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_4_value_label_clip) " id="Compare.001_4_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.000</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Compare.001_5_value" transform="translate(6.72,134.5)">
+        <clipPath id="Compare.001_5_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Compare.001_5_value_clip) " id="Compare.001_5_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Compare.001_5_value_label" transform="translate(15.0,0)">
+            <clipPath id="Compare.001_5_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_5_value_label_clip) " id="Compare.001_5_value_label_g">
+              <text y="11" x="0">Epsilon</text>
+            </g>
+          </g>
+          <g id="Compare.001_5_value_label" transform="translate(49.28,0)">
+            <clipPath id="Compare.001_5_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Compare.001_5_value_label_clip) " id="Compare.001_5_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.010</text>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="169.6" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-583.362060546875,380.5377197265625)" id="Object_Info.001" class="spec_node">
+    <metadata>{"type": "GeometryNodeObjectInfo", "x": -583.362060546875, "y": -380.5377197265625}</metadata>
+    <clipPath id="Object_Info.001_super_clip">
+      <rect width="112.0" height="212.79999999999998" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Object_Info.001_super_clip)">
+      <g>
+        <rect width="112.0" height="212.79999999999998" class="nodeframe" />
+      </g>
+      <g id="Header Object Info">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(130,53,76)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Object Info</text>
+      </g>
+      <g id="Object_Info.001_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Object_Info.001_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_0_label_clip) " id="Object_Info.001_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Transform</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Object_Info.001_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_1_label_clip) " id="Object_Info.001_1_label_g">
+          <text y="11" text-anchor="end" x="98.56">Location</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_2_label" transform="translate(6.72,69.7)">
+        <clipPath id="Object_Info.001_2_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_2_label_clip) " id="Object_Info.001_2_label_g">
+          <text y="11" text-anchor="end" x="98.56">Rotation</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_3_label" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Object_Info.001_3_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_3_label_clip) " id="Object_Info.001_3_label_g">
+          <text y="11" text-anchor="end" x="98.56">Scale</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_4_label" transform="translate(6.72,112.9)">
+        <clipPath id="Object_Info.001_4_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_4_label_clip) " id="Object_Info.001_4_label_g">
+          <text y="11" text-anchor="end" x="98.56">Geometry</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_5_selectbar" transform="translate(6.72,134.5)">
+        <clipPath id="Object_Info.001_5_selectbar_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="selectbar" clip-path="url(#Object_Info.001_5_selectbar_clip) " id="Object_Info.001_5_selectbar_g">
+          <rect x="0.0" y="0" width="49.28" height="16" class="value_bar" />
+          <g id="Object_Info.001_5_selectbar_0_label" transform="translate(2.9568,0)">
+            <clipPath id="Object_Info.001_5_selectbar_0_label_clip">
+              <rect x="0" y="0" width="43.3664" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Object_Info.001_5_selectbar_0_label_clip) " id="Object_Info.001_5_selectbar_0_label_g">
+              <text y="11" text-anchor="middle" x="21.6832">Original</text>
+            </g>
+          </g>
+          <rect x="49.28" y="0" width="49.28" height="16" class="progress_bar" />
+          <g id="Object_Info.001_5_selectbar_1_label" transform="translate(52.2368,0)">
+            <clipPath id="Object_Info.001_5_selectbar_1_label_clip">
+              <rect x="0" y="0" width="43.3664" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Object_Info.001_5_selectbar_1_label_clip) " id="Object_Info.001_5_selectbar_1_label_g">
+              <text y="11" text-anchor="middle" x="21.6832">Relative</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Object_Info.001_6_label" transform="translate(6.72,156.1)">
+        <clipPath id="Object_Info.001_6_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Object_Info.001_6_label_clip) " id="Object_Info.001_6_label_g">
+          <text y="11" x="0">Object</text>
+        </g>
+      </g>
+      <g id="Object_Info.001_7_boolean" transform="translate(6.72,177.7)">
+        <clipPath id="Object_Info.001_7_boolean_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="bool_false" clip-path="url(#Object_Info.001_7_boolean_clip) " id="Object_Info.001_7_boolean_g">
+          <rect x="3.2" y="3.2" width="9.6" height="9.6" stroke="none" rx="3px" class="bool_false" />
+          <g id="Object_Info.001_7_boolean_label" transform="translate(20.9536,0)">
+            <clipPath id="Object_Info.001_7_boolean_label_clip">
+              <rect x="0" y="0" width="72.6528" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Object_Info.001_7_boolean_label_clip) " id="Object_Info.001_7_boolean_label_g">
+              <text y="11" x="0">As Instance</text>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="212.79999999999998" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-585.559814453125,275.5074462890625)" id="Vector" class="spec_node">
+    <metadata>{"type": "FunctionNodeInputVector", "x": -585.559814453125, "y": -275.5074462890625}</metadata>
+    <clipPath id="Vector_super_clip">
+      <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Vector_super_clip)">
+      <g>
+        <rect width="112.0" height="126.4" class="nodeframe" />
+      </g>
+      <g id="Header Vector">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(130,53,76)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Vector</text>
+      </g>
+      <g id="Vector_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Vector_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Vector_0_label_clip) " id="Vector_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Vector</text>
+        </g>
+      </g>
+      <g id="Vector_1_value" transform="translate(6.72,48.1)">
+        <clipPath id="Vector_1_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Vector_1_value_clip) " id="Vector_1_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Vector_1_value_label" transform="translate(15.0,0)">
+            <clipPath id="Vector_1_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_1_value_label_clip) " id="Vector_1_value_label_g">
+              <text y="11" x="0">X</text>
+            </g>
+          </g>
+          <g id="Vector_1_value_label" transform="translate(49.28,0)">
+            <clipPath id="Vector_1_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_1_value_label_clip) " id="Vector_1_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.000</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Vector_2_value" transform="translate(6.72,69.7)">
+        <clipPath id="Vector_2_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Vector_2_value_clip) " id="Vector_2_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Vector_2_value_label" transform="translate(15.0,0)">
+            <clipPath id="Vector_2_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_2_value_label_clip) " id="Vector_2_value_label_g">
+              <text y="11" x="0">Y</text>
+            </g>
+          </g>
+          <g id="Vector_2_value_label" transform="translate(49.28,0)">
+            <clipPath id="Vector_2_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_2_value_label_clip) " id="Vector_2_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.000</text>
+            </g>
+          </g>
+        </g>
+      </g>
+      <g id="Vector_3_value" transform="translate(6.72,91.30000000000001)">
+        <clipPath id="Vector_3_value_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="value" clip-path="url(#Vector_3_value_clip) " id="Vector_3_value_g">
+          <rect x="0" y="0" width="98.56" height="16" class="value_bar" />
+          <g id="Vector_3_value_label" transform="translate(15.0,0)">
+            <clipPath id="Vector_3_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_3_value_label_clip) " id="Vector_3_value_label_g">
+              <text y="11" x="0">Z</text>
+            </g>
+          </g>
+          <g id="Vector_3_value_label" transform="translate(49.28,0)">
+            <clipPath id="Vector_3_value_label_clip">
+              <rect x="0" y="0" width="34.28" height="16" rx="3px" />
+            </clipPath>
+            <g class="label" clip-path="url(#Vector_3_value_label_clip) " id="Vector_3_value_label_g">
+              <text y="11" text-anchor="end" x="34.28">0.000</text>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="126.4" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-347.51373291015625,300.6005859375)" id="Rotate_Vector" class="spec_node">
+    <metadata>{"type": "FunctionNodeRotateVector", "x": -347.51373291015625, "y": -300.6005859375}</metadata>
+    <clipPath id="Rotate_Vector_super_clip">
+      <rect width="112.0" height="104.80000000000001" rx="5px" style="fill:none" />
+  </clipPath>
+    <g clip-path="url(#Rotate_Vector_super_clip)">
+      <g>
+        <rect width="112.0" height="104.80000000000001" class="nodeframe" />
+      </g>
+      <g id="Header Rotate Vector">
+        <rect width="112.0" height="20" opacity="1.0" fill="rgb(36,98,131)" stroke="none" />
+        <use href="#down_arrow" transform="translate(5,5)" />
+        <text x="18" y="15.0">Rotate Vector</text>
+      </g>
+      <g id="Rotate_Vector_0_label" transform="translate(6.72,26.5)">
+        <clipPath id="Rotate_Vector_0_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Rotate_Vector_0_label_clip) " id="Rotate_Vector_0_label_g">
+          <text y="11" text-anchor="end" x="98.56">Vector</text>
+        </g>
+      </g>
+      <g id="Rotate_Vector_1_label" transform="translate(6.72,48.1)">
+        <clipPath id="Rotate_Vector_1_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Rotate_Vector_1_label_clip) " id="Rotate_Vector_1_label_g">
+          <text y="11" x="0">Vector</text>
+        </g>
+      </g>
+      <g id="Rotate_Vector_2_label" transform="translate(6.72,69.7)">
+        <clipPath id="Rotate_Vector_2_label_clip">
+          <rect x="0" y="0" width="98.56" height="16" rx="3px" />
+        </clipPath>
+        <g class="label" clip-path="url(#Rotate_Vector_2_label_clip) " id="Rotate_Vector_2_label_g">
+          <text y="11" x="0">Rotation</text>
+        </g>
+      </g>
+    </g>
+    <rect width="112.0" height="104.80000000000001" rx="5px" style="fill:none" />
+  </g>
+  <g transform="translate(-728.2326049804688,78.79544830322266)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(-728.2326049804688,100.39544830322265)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(-728.2326049804688,121.99544830322266)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(-728.2326049804688,143.59544830322267)" class="marker">
+    <use href="#marker_circle" class="custom" />
+  </g>
+  <g transform="translate(2077.814697265625,285.1470947265625)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(2077.814697265625,306.7470947265625)" class="marker">
+    <use href="#marker_circle" class="custom" />
+  </g>
+  <g transform="translate(1643.29794921875,69.40463256835938)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1445.52880859375,91.00463256835937)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(1445.52880859375,112.60463256835938)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(1445.52880859375,134.2046325683594)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1309.577392578125,261.5305938720703)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1309.577392578125,283.13059387207034)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1197.577392578125,326.3305938720703)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1197.577392578125,347.9305938720703)" class="marker">
+    <use href="#marker_diamond" class="boolean" />
+  </g>
+  <g transform="translate(1949.109375,283.3323974609375)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1837.109375,304.9323974609375)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(189.38102874755862,-33.51979064941406)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1.1799545288085938,-11.919790649414061)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(1.1799545288085938,9.68020935058594)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(-225.9644775390625,685.77392578125)" class="marker">
+    <use href="#marker_diamond" class="vector" />
+  </g>
+  <g transform="translate(126.77954177856446,456.9138488769531)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(-65.28144454956055,478.51384887695315)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-65.28144454956055,500.1138488769531)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-65.28144454956055,521.7138488769531)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(694.2376708984375,656.0401611328125)" class="marker">
+    <use href="#marker_diamond" class="int" />
+  </g>
+  <g transform="translate(694.2376708984375,677.6401611328125)" class="marker">
+    <use href="#marker_diamond" class="int" />
+  </g>
+  <g transform="translate(483.0105895996094,374.15484619140625)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(371.0105895996094,438.95484619140626)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(371.0105895996094,460.5548461914062)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(920.6695556640625,472.83099365234375)" class="marker">
+    <use href="#marker_diamond" class="value" />
+  </g>
+  <g transform="translate(920.6695556640625,494.4309936523438)" class="marker">
+    <use href="#marker_diamond" class="value" />
+  </g>
+  <g transform="translate(920.6695556640625,516.0309936523438)" class="marker">
+    <use href="#marker_diamond" class="value" />
+  </g>
+  <g transform="translate(808.6695556640625,580.8309936523438)" class="marker">
+    <use href="#marker_diamond" class="value" />
+  </g>
+  <g transform="translate(808.6695556640625,602.4309936523438)" class="marker">
+    <use href="#marker_diamond" class="int" />
+  </g>
+  <g transform="translate(699.9176025390625,484.02020263671875)" class="marker">
+    <use href="#marker_circle" class="boolean" />
+  </g>
+  <g transform="translate(587.9176025390625,527.2202026367188)" class="marker">
+    <use href="#marker_circle" class="boolean" />
+  </g>
+  <g transform="translate(587.9176025390625,548.8202026367187)" class="marker">
+    <use href="#marker_circle" class="boolean" />
+  </g>
+  <g transform="translate(481.1322326660156,580.7962036132812)" class="marker">
+    <use href="#marker_circle" class="boolean" />
+  </g>
+  <g transform="translate(369.1322326660156,645.5962036132812)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(369.1322326660156,667.1962036132812)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(369.1322326660156,688.7962036132812)" class="marker">
+    <use href="#marker_circle" class="value" />
+  </g>
+  <g transform="translate(-475.362060546875,411.0377197265625)" class="marker">
+    <use href="#marker_circle" class="matrix" />
+  </g>
+  <g transform="translate(-475.362060546875,432.6377197265625)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-475.362060546875,454.2377197265625)" class="marker">
+    <use href="#marker_circle" class="rotation" />
+  </g>
+  <g transform="translate(-475.362060546875,475.8377197265625)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-475.362060546875,497.4377197265625)" class="marker">
+    <use href="#marker_circle" class="geometry" />
+  </g>
+  <g transform="translate(-587.362060546875,540.6377197265625)" class="marker">
+    <use href="#marker_circle" class="object" />
+  </g>
+  <g transform="translate(-587.362060546875,562.2377197265625)" class="marker">
+    <use href="#marker_circle" class="boolean" />
+  </g>
+  <g transform="translate(-477.559814453125,306.0074462890625)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-239.51373291015625,331.1005859375)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-351.51373291015625,352.7005859375)" class="marker">
+    <use href="#marker_circle" class="vector" />
+  </g>
+  <g transform="translate(-351.51373291015625,374.3005859375)" class="marker">
+    <use href="#marker_circle" class="rotation" />
+  </g>
+</svg>

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Generic Confluent - Blog</title>
+    <subtitle>I am a happy hippopotamus.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://generic-confluent.ca/blog/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://generic-confluent.ca/blog/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-08-15T20:18:10-06:00</updated>
+    <id>https://generic-confluent.ca/blog/atom.xml</id>
+    <entry xml:lang="en">
+        <title>World&#x27;s Worst Compression</title>
+        <published>2025-08-15T20:18:10-06:00</published>
+        <updated>2025-08-15T20:18:10-06:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://generic-confluent.ca/blog/worst-compression/"/>
+        <id>https://generic-confluent.ca/blog/worst-compression/</id>
+        
+        <content type="html" xml:base="https://generic-confluent.ca/blog/worst-compression/">&lt;h1 id=&quot;context&quot;&gt;Context&lt;a class=&quot;zola-anchor&quot; href=&quot;#context&quot; aria-label=&quot;Anchor link for: context&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;p&gt;I actually came up with this awhile ago for a school project (search and
+planning class). For an replacement grade we had to just apply for some of the
+methods we had learned about in class. At the time for reasons I will not go
+into here I was thinking about efficient ways to store mesh data on GPUs. That
+means considering how to minimize mesh memory to ensure quick transfer from RAM
+to VRAM, appropriatly reducing mesh detail according to distance from camera and
+resolution, etc etc. I was simultaneously annoyed by the fact that mesh data and
+collision data was not unified. Then I had an idea. An awful idea. I had a
+wonderfully awful idea ⊂(◉‿◉)つ. &quot;What if all my data was defined by functions?
+What if all my data was defined by SDFs? Or most of my data was defined by
+functions? Then I get arbitrary resolution on those object, convenient normals
+as long as I restrict the operations I permit, and I can kabe my kace and tea it
+too.&quot;&lt;&#x2F;p&gt;
+&lt;p&gt;So I decided I would make a project out of a simpler version of this:
+compression for terrain data. Training a neural network was insufficient for my
+task because —well there wasn&#x27;t really a reason. I had to use search
+algorithms and pin holed myself into syntesizing a program— no there was a
+reason: I wanted to be able to take derivatives of the final function. Still
+neural networks are probably nicer because matrix multiplication is really fast,
+and choosing a good activation could yield some interesting results.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;overview&quot;&gt;Overview&lt;a class=&quot;zola-anchor&quot; href=&quot;#overview&quot; aria-label=&quot;Anchor link for: overview&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;p&gt;Consider a height field (terrain map with no overhangs&#x2F;caves; z is function of
+x and y) mesh of uniform density. The worst way to store is with a point in
+RR^3 for each vertex and then a list of edges&#x2F;faces. To reduce the storage
+requirement you can do some obvious things like inferring the (x,y) from the
+position of the height in the buffer (assuming that points are distributed
+uniformly in a grid). Or you could remove the uniformity constraint and use
+more vertices where the derivative of the surface changes (more detail on not
+flat regions).&lt;&#x2F;p&gt;
+&lt;p&gt;But we&#x27;re going to do something strange instead and find a function that fits a
+terrain mesh to give it &quot;infinite resolution.&quot; Its not in practice because
+there is a finite number of representable floating point numbers.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;representation&quot;&gt;Representation&lt;a class=&quot;zola-anchor&quot; href=&quot;#representation&quot; aria-label=&quot;Anchor link for: representation&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;p&gt;The first time I did this I decided to make a stack based interpreter for an
+array of constants, variables, and operations layed out in Reverse Polish
+notation. Relative to an AST it was much faster to evaluate being fully
+contiguous and quick to iterate over. It wasn&#x27;t very nice to search over
+because it was hard to check if the arity of the various operations was being
+respected.&lt;&#x2F;p&gt;
+&lt;p&gt;I ought to I read a paper a couple months ago &quot;&lt;a rel=&quot;nofollow noreferrer external&quot; href=&quot;https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2006.08381&quot;&gt;DreamCoder: Growing generalizable,
+interpretable knowledge with wake-sleep Bayesian program
+learning&lt;&#x2F;a&gt;&quot; and they used lambda calculus
+expressions to represent programs in a search space.&lt;&#x2F;p&gt;
+&lt;p&gt;Wait should I do AST?&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Blender Portal</title>
+        <published>2025-08-06T10:12:09-06:00</published>
+        <updated>2025-08-15T12:53:41-06:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://generic-confluent.ca/blog/blender-portal/"/>
+        <id>https://generic-confluent.ca/blog/blender-portal/</id>
+        
+        <content type="html" xml:base="https://generic-confluent.ca/blog/blender-portal/">&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;result.gif&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;p&gt;I somehow decided to implement a portal in blender, and a proper explanation of
+the theory surrounding the implementation details seemed quite lacking—and
+I like to have a concrete handle on what I&#x27;m doing when I work on something. So
+here we are. The goal of this post is not quite to create a radical new and
+better portal impl, but moreso to pick among the pieces people have already
+developed and assemble them into a good and reusable impl.&lt;&#x2F;p&gt;
+&lt;p&gt;Here is the feature list I want from the implementation:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Portal transforms can be modified without breaking the setup.&lt;&#x2F;li&gt;
+&lt;li&gt;Transport geometry between portals so there is no need to duplicate objects travelling through.&lt;&#x2F;li&gt;
+&lt;li&gt;When we see a portal through the portal, there will be a portal™&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Here are the restrictions:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Portal is an N-Gon which lies in the XY plane when ignoring rotation and translation.&lt;&#x2F;li&gt;
+&lt;li&gt;Connected portals have the same geometry.&lt;&#x2F;li&gt;
+&lt;li&gt;Origin is a point from the portals face.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;I&#x27;ll break up implementation into three sub problems:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Portal Transform: Thinking about what going from one portal to another means.&lt;&#x2F;li&gt;
+&lt;li&gt;Portal Shading: What the transform means for rays.&lt;&#x2F;li&gt;
+&lt;li&gt;Geometry Teleportation: What the transform means for geometry.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;And finally before we talk about portals I should define that the front of a
+portal is the side whose normal points up and the back of a portal is the side
+that points down when rotation is zeroed.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;portal-transform&quot;&gt;Portal Transform&lt;a class=&quot;zola-anchor&quot; href=&quot;#portal-transform&quot; aria-label=&quot;Anchor link for: portal-transform&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;portal-ray-connect.gif&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;p&gt;We can think of transforming the in-portal so that it adopts the translation,
+rotation, and scale of the out-portal. This can be seen in the image above, the
+circles are portals and the lines between them can be thought as how we move the
+rays to the other portal.&lt;&#x2F;p&gt;
+&lt;p&gt;As usual we can see we need SRT for transformation order. Only once portals are
+the same size and parallel can we actually move the rays between them, since
+thats when the offset is constant between. This transform only applies to world
+space we can just do rotation and scaling in local space for the incoming vector
+for example.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;portal-shading&quot;&gt;Portal Shading&lt;a class=&quot;zola-anchor&quot; href=&quot;#portal-shading&quot; aria-label=&quot;Anchor link for: portal-shading&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;p&gt;Portal shading can be done with RayPortal3D BSDF Node, and most random youtube
+tutorials do a decent job showcasing it. I ended up watching &lt;a rel=&quot;nofollow noreferrer external&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=cPSlFcKpW_Y&quot;&gt;Ray Portal BSDF
+Node | Blender Tutorial&lt;&#x2F;a&gt; and I was
+quite lucky to see this because if not I would have spent forever trying to figure
+out why just doing the portal transform is insufficient for shading.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;offset-overview-light.png&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;p&gt;It turns out that offsetting the exiting ray from the out portal with the normal
+is a very good idea because it ensures that the cycles doesn&#x27;t think the ray hit
+the portal the next time it is supposed to be moving.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;portal-store-transform.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;geometryNode&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; portalTransform&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    inputs&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;GroupInput&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    selfObject&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    normal&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Normal&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; Geometry &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    var&lt;&#x2F;span&gt;&lt;span&gt; geometry &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; inputs.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;get&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;Geometry&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; object &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; inputs.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;get&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;Object&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; otherInfo &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            object&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            asInstance&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; false&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            transformSpace&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;relative&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Ok now store the actual transforms&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; otherInfo &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;        &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; NOTE: How object is transformed relative to self object.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        transformSpace&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;relative&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        object&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; connectedPortal&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        asInstance&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; false&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;storeNamedAttribute&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        dataType&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;vector&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        domain&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;face&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        name&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt; &amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;offset_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        value&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; otherInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; otherInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;rotation&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;toEuler&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;storeNamedAttribute&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        dataType&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;vector&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        domain&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;face&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        name&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt; &amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;rotate_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        value&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;storeNamedAttribute&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        dataType&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;vector&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        domain&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;face&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        name&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt; &amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;scale_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        value&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; otherInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;scale&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Compute and cache normal correction&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; otherPortalNormal &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; vec3&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt;0.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt;1.0&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;      .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;vectorRotate&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;          type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;euler&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;          invert&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; false&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;          rotation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;      )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span&gt; geometry&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;My version of both of these is slightly different from the tutorial video I
+linked to above. I only store relative transforms because that&#x27;s all you really
+need, and also I modified the position transform to accomodate my need to
+support portal scaling.&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;portal-material-nodes.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;shader&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; portal&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    geometry&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Geometry&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    objectInfo&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;ObjectInfo&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    attributes&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Attributes&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; MaterialOutput &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; offsetToOther:&lt;&#x2F;span&gt;&lt;span&gt; Vec3 &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; attributes.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;offset_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther:&lt;&#x2F;span&gt;&lt;span&gt; Vec3 &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; attributes.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;rotate_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; scaleToOther:&lt;&#x2F;span&gt;&lt;span&gt; Vec3 &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span&gt; attributes.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span class=&quot;z-string&quot;&gt;scale_to_other&lt;&#x2F;span&gt;&lt;span class=&quot;z-punctuation z-definition z-string&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; normalCorrection:&lt;&#x2F;span&gt;&lt;span&gt; Vec3 &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; -0.001&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; *&lt;&#x2F;span&gt;&lt;span&gt; geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;normal&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Direction ray should exit out-portal.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; exitDirection &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; -1.0&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; *&lt;&#x2F;span&gt;&lt;span&gt; geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;incoming&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;vectorRotate&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;euler&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            invert&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; false&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            center&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; Vec3.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;zero&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            rotation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Location of the ray on the output portal surface&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; exitPosition &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; mapping&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support z-variable&quot;&gt;point&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        vector&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; geometry.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;position&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; +&lt;&#x2F;span&gt;&lt;span&gt; normalCorrection&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        location&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; offsetToOther&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        rotation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; rotateToOther&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        scale&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; scaleToOther&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Move the ray and change direction&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; surface &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; rayPortalBSDF&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        color&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;white&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        position&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; exitPosition&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        direction&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; exitDirection&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; MaterialOutput&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        surface&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; surface&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Note that we Must use Cycles since Ray Portal BSDF is only available in Cycles
+(&lt;a rel=&quot;nofollow noreferrer external&quot; href=&quot;https:&#x2F;&#x2F;docs.blender.org&#x2F;manual&#x2F;en&#x2F;latest&#x2F;render&#x2F;shader_nodes&#x2F;shader&#x2F;ray_portal.html&quot;&gt;Ray Portal
+BSDF&lt;&#x2F;a&gt;).
+That&#x27;s fine though since a ray tracer is more suited to portal rendering than a
+rasterizer (EEVEE).&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;important-nodes&quot;&gt;Important Nodes&lt;a class=&quot;zola-anchor&quot; href=&quot;#important-nodes&quot; aria-label=&quot;Anchor link for: important-nodes&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;ray-portal-bsdf&quot;&gt;Ray Portal BSDF&lt;a class=&quot;zola-anchor&quot; href=&quot;#ray-portal-bsdf&quot; aria-label=&quot;Anchor link for: ray-portal-bsdf&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h3&gt;
+&lt;p&gt;This is a shader that lets you arbitrarily set the direction and position of a
+ray that hits the shaded object. If you don&#x27;t supply a direction or position it
+will not be changed. A Ray Portal BSDF without supplied &lt;code&gt;Position&lt;&#x2F;code&gt; or
+&lt;code&gt;Direction&lt;&#x2F;code&gt; is equivalent to a Transparent BSDF.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;geometry&quot;&gt;Geometry&lt;a class=&quot;zola-anchor&quot; href=&quot;#geometry&quot; aria-label=&quot;Anchor link for: geometry&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;Position&lt;&#x2F;code&gt;: Place the ray hit on the surface of the object (world space).&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Normal&lt;&#x2F;code&gt;: Surface normal at the hit position. (Normalized)&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Incoming&lt;&#x2F;code&gt;: A vector that points towards the direction the ray came from. (Normalized)&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;vector-overview-light.png&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;h3 id=&quot;object-info&quot;&gt;Object Info&lt;a class=&quot;zola-anchor&quot; href=&quot;#object-info&quot; aria-label=&quot;Anchor link for: object-info&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;Location&lt;&#x2F;code&gt; here is the position of the object origin. (world space)&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Rotation&lt;&#x2F;code&gt; is of course the rotation of the object. The Blender UI presents
+rotations in euler format, but they are internally stored as quaternions (hence
+the need to perform a &lt;code&gt;to_euler&lt;&#x2F;code&gt; in the graph above).&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;Transform Space&lt;&#x2F;code&gt;: The transformation of the vector and geometry outputs.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Original&lt;&#x2F;code&gt;: Output the geometry relative to the input object transform, and the location, rotation and scale relative to the world origin.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;Relative&lt;&#x2F;code&gt;: Bring the input object geometry, location, rotation and scale into the modified object, maintaining the relative position between the two objects in the scene.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Quick clafiying note on the transform space property (&lt;code&gt;Relative&lt;&#x2F;code&gt; or &lt;code&gt;Original&lt;&#x2F;code&gt;),
+the &lt;a rel=&quot;nofollow noreferrer external&quot; href=&quot;https:&#x2F;&#x2F;docs.blender.org&#x2F;manual&#x2F;en&#x2F;latest&#x2F;modeling&#x2F;geometry_nodes&#x2F;input&#x2F;scene&#x2F;object_info.html&quot;&gt;docs
+explanation&lt;&#x2F;a&gt;
+has some clunky wording. &lt;code&gt;Original&lt;&#x2F;code&gt; is what you would see in the n-panel with
+the object transforms, &lt;code&gt;Relative&lt;&#x2F;code&gt; is the difference between the transforms for
+two objects. It is the transformation from the object with the geometry node
+modifier to the object passed to &lt;code&gt;Object Info&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;geometry-teleportation&quot;&gt;Geometry Teleportation&lt;a class=&quot;zola-anchor&quot; href=&quot;#geometry-teleportation&quot; aria-label=&quot;Anchor link for: geometry-teleportation&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h1&gt;
+&lt;p&gt;Here we actualy don&#x27;t have so conventional a solution in Blender. There is a rough set
+of things that needs to be done before this is working.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Divide the mesh into geometry that should stay and geometry that should be portaled. (hard)&lt;&#x2F;li&gt;
+&lt;li&gt;Make the portaled geometry disappear at the in portal and appear at the out portal. (easy)&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;divide-geometry&quot;&gt;Divide Geometry&lt;a class=&quot;zola-anchor&quot; href=&quot;#divide-geometry&quot; aria-label=&quot;Anchor link for: divide-geometry&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h2&gt;
+&lt;p&gt;Step one is a bit troublesome because we want our portals to work for static renders. And
+presumably which side of the portal the geometry should exit on is determined by which
+side it goes in on, but in a render we don&#x27;t really have a concept of movement. To fix
+this we need to define outside of the system which side of the system we want the geometry
+moved on. I&#x27;ll do this by accepting a vertex group and pulling the weights. A weight below
+0.5 will mean it will exit the back of the out-portal and above and including 0.5 means
+it will exit out the front of  the out-portal.&lt;&#x2F;p&gt;
+&lt;p&gt;So we can figure out which geometry should be selected once it passes a certain side but
+because I&#x27;m trying to store the weights in a single vertex group per mesh we need to perform
+additional selection. Alot of implementation seem to just use a plane to cut the mesh and
+everything on the other side of the plane is moved. That is not flexible enough for what I want.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;The portal is just a face so we can extrude it by some depth along it&#x27;s
+normal and then the geometry past the face which lies inside of the prism is
+what we want to transport.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;For fully connected meshes we can select the edges that intersect with the
+portal face then isolate mesh components which lie on either side of the portal.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Approach #1 is not it for me. To isolate all the mesh in a volume the initial
+instinct would be to do a mesh intersection. Except the problem with that is
+that it will nuke your mesh attributes because it may be the case that non of
+the vertices after the intersection was in the original mesh. And so to play
+nice with shading we need to restrict ourselves to mesh differences. And now
+considering the approach I suppose you could do a cut by making your volume and
+flipping the faces on it and going through each face and doing a boolean
+difference (after making sure you join the original planar face back to the
+extrusion flipped correctly, convex-hull is a one node solution to this but
+fixing the geometry manually isn&#x27;t much a hassle either and is faster ), but
+that would be incredibly slow unless you implement the difference yourself and
+just delete edges from the mesh. Which in that case would make the final mesh
+pieces appear pretty jagged near the portal surface and would not be a viable
+solution for meshes with little geometry.&lt;&#x2F;p&gt;
+&lt;p&gt;I went with approach #2. Cut the mesh in half, isolate the islands that are left
+on the other side of the portal and move them to the out portal. Unfortunatly mesh
+slow—like really really slow. Luckily Blender 4.5 introduces a solver optimized
+for booleans of manifold meshes which is significantly faster. So I have basically two
+versions of my mesh portal nodes. A fast one for manifold geometry and a significantly
+slower one which is set to use the exact boolean solver.&lt;&#x2F;p&gt;
+&lt;p&gt;The rough template looks like this:
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;portal-cut-geometry.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;nodeGroup&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; cutGeometryWithSurface&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    geometry&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Geometry&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    surface&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; Geometry &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; This is the smallest I could get without breakage. But that was probably&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; because I set my merge distance to 0.001 also.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; cutWidth &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 0.001&lt;&#x2F;span&gt;&lt;span&gt;;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; surfaceInfo &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;surface&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Build the cutting cylinder.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; cylinder:&lt;&#x2F;span&gt;&lt;span&gt; Geometry &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; transformGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;        &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; NOTE: Pay attention to all here when in the context of manifold portal.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;        &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; If we don&amp;#39;t merge globally we&amp;#39;ll get holes.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; mergeByDistance&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            mode&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;all&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            distance&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 0.001&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;            geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; joinGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; [&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;flipFaces&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;mesh&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; surfaceInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;extrudeMesh&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;mesh&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; surfaceInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;offsetScale&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; cutWidth&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;]&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        )&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        translation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; combineXYZ&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;z&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; cutWidth &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; -2.0&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;rotateVector&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;rotation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; surfaceInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;rotation&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; If we have non manifold geometry we can just swap the solver.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; Unfortunately I would need to duplicate the node and add logic for this.&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; And I don&amp;#39;t want to do that &amp;lt;(｀^´)&amp;gt;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; meshBoolean&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        operation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;difference&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        solver&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;manifold&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        mesh1&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; geometry&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        mesh2&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; cylinder&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Ok so we have cut the mesh like a hot metal ruler cuts through air. Now we need
+to consider the disjoint pieces of the mesh and decide which pieces should be
+moved. The obvious thing to do is just find chunks of geometry whose vertices
+are all past the portal surface. But we should be specific about what &quot;past&quot;
+means.&lt;&#x2F;p&gt;
+&lt;p&gt;The most basic past means on a certain side of the plane containing the portal
+surface. Using this definition of past though would result in the mesh being
+transported to the out portal whenever the modifier is active. We could
+constrain ourselves a little bit and say that the closest point to the plane
+must lie within the portal boundary and the offset from that point to our vertex
+must be normal to the plane. That would give you an approach #1 flavoured result
+where all the vertices of the mesh piece would need to be within an infinetly
+extruded prism along the portal normal. That&#x27;s pretty easy to do with Geometry
+Proximity. You could also require that at least one vertex is within a certain
+distance of the portal. Or say that all the vertices of the mesh must have a
+certain weight in a given vertex group as I suggested earlier.&lt;&#x2F;p&gt;
+&lt;p&gt;The criteria you chouse of course depends on the use case. I&#x27;m trying to go generic. So I&#x27;ll only use the most generic criteria: all your vertices are on
+a certain side of the plane.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;group-signed-distance.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;portal-teleport-geometry.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;&#x2F;p&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;nodeGroup&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; signedDistanceFromPlane&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    planeNormal&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Vec3&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    pointOnPlane&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Vec3&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    vector&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Vec3&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; float &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span&gt; planeNormal.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;dot&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;vector&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&lt;&#x2F;span&gt;&lt;span&gt; planeNormal.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;dot&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;pointOnPlane&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;geometryNodes&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; portalManifoldObject&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    geometry&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Geometry&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    position&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Position&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    meshIsland&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;MeshIsland&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    inPortal&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    outPortal&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; Geometry &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; inPortalInfo &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;object&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortal&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;transformSpace&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;relative&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; inPortalNormal &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; vec3&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;z&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 1.0&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;rotateVector&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;rotation&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortalInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;rotation&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; dist &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; signedDistanceFromPlane&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        planeNormal&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortalNormal&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        pointOnPlane&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortalInfo.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;location&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;        &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; I didn&amp;#39;t actually use the evaluate on domain, this is just for clarity&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        vector&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; evaluateOnDomain&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;vector&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;domain&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support z-variable&quot;&gt;point&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;value&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; position&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; criteria &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; accumulateField&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        type&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support z-variable&quot;&gt;float&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        domain&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-support z-variable&quot;&gt;point&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        value&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; dist &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 0.0&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; &amp;amp;&amp;amp;&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; notEqual&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;A&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; dist&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;B&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 0.0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;epsilon&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-constant&quot;&gt; 0.01&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        groupId&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; meshIsland.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;islandIndex&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; pieces &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; separateGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; cutGeometryWithSurface&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; geometry&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;surface&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortal&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        selection&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; criteria&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; joinGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-support&quot;&gt;        relativeTransformGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;fromObject&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; inPortal&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;toObject&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; outPortal&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;geometry&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; pieces.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;selected&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        pieces.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;inverted&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    ]&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;&lt;h2 id=&quot;portal-geometry&quot;&gt;Portal Geometry&lt;a class=&quot;zola-anchor&quot; href=&quot;#portal-geometry&quot; aria-label=&quot;Anchor link for: portal-geometry&quot; style=&quot;visibility: hidden;&quot;&gt;&lt;&#x2F;a&gt;
+&lt;&#x2F;h2&gt;
+&lt;p&gt;This is trivially easy compared to division and on a nice note since we&#x27;re in
+geometry nodes now we can actually use matrices which makes our transform
+really nice:&lt;&#x2F;p&gt;
+&lt;figure&gt;
+    &lt;img src=&quot;&amp;#x2F;blog&amp;#x2F;blender-portal&amp;#x2F;transform-relative-geometry.svg&quot;&gt;
+&lt;&#x2F;figure&gt;
+&lt;pre class=&quot;giallo z-code&quot;&gt;&lt;code data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage&quot;&gt;@&lt;&#x2F;span&gt;&lt;span class=&quot;z-storage&quot;&gt;nodeGroup&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-storage z-type&quot;&gt;func&lt;&#x2F;span&gt;&lt;span class=&quot;z-entity z-name&quot;&gt; relativeTransformGeometry&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    fromObject&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    toObject&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Object&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-entity z-name&quot;&gt;    geometry&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span&gt;Geometry&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt; -&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; Geometry &lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; selfToFrom &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;transformSpace&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;relative&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;object&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; fromObject&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;transform&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    let&lt;&#x2F;span&gt;&lt;span&gt; selfToTo &lt;&#x2F;span&gt;&lt;span class=&quot;z-keyword&quot;&gt;=&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; objectInfo&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;transformSpace&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; .&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;relative&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;object&lt;&#x2F;span&gt;&lt;span&gt;:&lt;&#x2F;span&gt;&lt;span&gt; toObject&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;transform&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; I wrote it like this to be clear about the argument order for the&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-punctuation z-definition z-comment&quot;&gt;    &#x2F;&#x2F;&lt;&#x2F;span&gt;&lt;span class=&quot;z-comment&quot;&gt; node. Order is as you would expect, with (mat0, mat1) -&amp;gt; mat0 * mat1&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span class=&quot;z-keyword&quot;&gt;    return&lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt; multiplyMatrices&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;        selfToTo&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span class=&quot;z-support&quot;&gt;invertMatrix&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span&gt;selfToFrom&lt;&#x2F;span&gt;&lt;span&gt;)&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span class=&quot;z-variable z-other&quot;&gt;matrix&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;    )&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;
+&lt;span class=&quot;giallo-l&quot;&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And that is about all.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

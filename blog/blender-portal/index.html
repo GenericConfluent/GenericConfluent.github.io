@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  
+  
+    
+  
+  <meta name="description" content="Quest for a decent portal setup in blender. No stylization, just infinite recursion and mesh teleporation.">
+
+  <title>Blender Portal</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="https://generic-confluent.ca/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://generic-confluent.ca/img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://generic-confluent.ca/img/apple-touch-icon.png">
+  
+  <style>
+
+  /* light mode colors */
+  body {
+    --primary-color: #5871a2;
+    --primary-pale-color: #5871a233;
+    --primary-decoration-color: #5871a210;
+    --bg-color: #ffffff;
+    --text-color: #2f3030;
+    --text-pale-color: #767676;
+    --text-decoration-color: #a9a9a9;
+    --highlight-mark-color: #5f75b020;
+
+    --callout-note-color: #5871a2;
+    --callout-tip-color: #268556;
+    --callout-important-color: #885fc9;
+    --callout-warning-color: #ab6632;
+    --callout-caution-color: #c64e4e;
+  }
+
+  /* dark mode colors */
+  body.dark {
+    --primary-color: #6f8fd1;
+    --primary-pale-color: #6f8fd166;
+    --primary-decoration-color: #6f8fd112;
+    --bg-color: #1c1c1c;
+    --text-color: #c1c1c1;
+    --text-pale-color: #848484;
+    --text-decoration-color: #5f5f5f;
+    --highlight-mark-color: #8296cb3b;
+
+    --callout-note-color: #6f8fd1;
+    --callout-tip-color: #47976f;
+    --callout-important-color: #9776cd;
+    --callout-warning-color: #ad7a52;
+    --callout-caution-color: #d06161;
+  }
+
+  /* typography */
+  body {
+    --main-font: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --homepage-max-width: 768px;
+    --main-max-width: 768px;
+    --avatar-size: 60px;
+    --font-size: 16px;
+    --line-height: 1.75;
+    --img-border-radius: 0px;
+    --detail-border-radius: 0px;
+    --dark-mode-img-brightness: 0.75;
+    --dark-mode-chart-brightness: 0.75;
+    --inline-code-border-radius: 2px;
+    --inline-code-bg-color: var(--primary-decoration-color);
+    --block-code-border-radius: 0px;
+    --block-code-border-color: var(--primary-color);
+    --detail-border-color: var(--primary-color);
+  }
+
+</style>
+
+  <link rel="stylesheet" href="https://generic-confluent.ca/main.css">
+  
+
+<link id="hl" rel="stylesheet" type="text/css" href="/giallo-light.css" />
+
+
+
+  
+</head>
+
+<body class="post">
+  
+  <script>
+    const theme = sessionStorage.getItem('theme');
+    const match = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if ((theme && theme == 'dark') || (!theme && match)) {
+      document.body.classList.add('dark');
+      const hl = document.querySelector('link#hl');
+      if (hl) hl.href = 'https://generic-confluent.ca/giallo-dark.css';
+    }
+  </script>
+  
+  
+<div id="wrapper">
+  <div id="blank"></div>
+  <aside>
+    
+    
+    <nav>
+      <ul>
+        
+        <li>
+          <a class="h2" href="#portal-transform">Portal Transform</a>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#portal-shading">Portal Shading</a>
+          
+          <ul>
+            
+            <li>
+              <a class="h3" href="#important-nodes">Important Nodes</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#geometry-teleportation">Geometry Teleportation</a>
+          
+          <ul>
+            
+            <li>
+              <a class="h3" href="#divide-geometry">Divide Geometry</a>
+            </li>
+            
+            <li>
+              <a class="h3" href="#portal-geometry">Portal Geometry</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+      </ul>
+    </nav>
+    
+    
+    <button id="back-to-top" aria-label="back to top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+
+    </button>
+    
+  </aside>
+  <main>
+    
+<header>
+  <nav>
+    <a id="back-link" href="https:&#x2F;&#x2F;generic-confluent.ca&#x2F;blog">← Back</a>
+  </nav>
+</header>
+
+
+    <div>
+      
+      
+      
+      
+      <div id="copy-cfg" style="display: none;" data-copy-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" data-check-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+"></div>
+      
+      <article class="prose">
+        <h1>Blender Portal</h1>
+        <div id="post-info">
+          <div id="date">
+            <span id="publish">Aug 6, 2025</span>
+            <span>Updated on <span id="updated">Aug 15, 2025</span></span>
+            </div>
+
+          
+        </div>
+
+        
+        
+
+        
+
+        <figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;result.gif">
+</figure>
+<p>I somehow decided to implement a portal in blender, and a proper explanation of
+the theory surrounding the implementation details seemed quite lacking—and
+I like to have a concrete handle on what I'm doing when I work on something. So
+here we are. The goal of this post is not quite to create a radical new and
+better portal impl, but moreso to pick among the pieces people have already
+developed and assemble them into a good and reusable impl.</p>
+<p>Here is the feature list I want from the implementation:</p>
+<ol>
+<li>Portal transforms can be modified without breaking the setup.</li>
+<li>Transport geometry between portals so there is no need to duplicate objects travelling through.</li>
+<li>When we see a portal through the portal, there will be a portal™</li>
+</ol>
+<p>Here are the restrictions:</p>
+<ul>
+<li>A Portal is an N-Gon which lies in the XY plane when ignoring rotation and translation.</li>
+<li>Connected portals have the same geometry.</li>
+<li>Origin is a point from the portals face.</li>
+</ul>
+<p>I'll break up implementation into three sub problems:</p>
+<ol>
+<li>Portal Transform: Thinking about what going from one portal to another means.</li>
+<li>Portal Shading: What the transform means for rays.</li>
+<li>Geometry Teleportation: What the transform means for geometry.</li>
+</ol>
+<p>And finally before we talk about portals I should define that the front of a
+portal is the side whose normal points up and the back of a portal is the side
+that points down when rotation is zeroed.</p>
+<h1 id="portal-transform">Portal Transform<a class="zola-anchor" href="#portal-transform" aria-label="Anchor link for: portal-transform" style="visibility: hidden;"></a>
+</h1>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;portal-ray-connect.gif">
+</figure>
+<p>We can think of transforming the in-portal so that it adopts the translation,
+rotation, and scale of the out-portal. This can be seen in the image above, the
+circles are portals and the lines between them can be thought as how we move the
+rays to the other portal.</p>
+<p>As usual we can see we need SRT for transformation order. Only once portals are
+the same size and parallel can we actually move the rays between them, since
+thats when the offset is constant between. This transform only applies to world
+space we can just do rotation and scaling in local space for the incoming vector
+for example.</p>
+<h1 id="portal-shading">Portal Shading<a class="zola-anchor" href="#portal-shading" aria-label="Anchor link for: portal-shading" style="visibility: hidden;"></a>
+</h1>
+<p>Portal shading can be done with RayPortal3D BSDF Node, and most random youtube
+tutorials do a decent job showcasing it. I ended up watching <a rel="nofollow noreferrer external" href="https://www.youtube.com/watch?v=cPSlFcKpW_Y">Ray Portal BSDF
+Node | Blender Tutorial</a> and I was
+quite lucky to see this because if not I would have spent forever trying to figure
+out why just doing the portal transform is insufficient for shading.</p>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;offset-overview-light.png">
+</figure>
+<p>It turns out that offsetting the exiting ray from the out portal with the normal
+is a very good idea because it ensures that the cycles doesn't think the ray hit
+the portal the next time it is supposed to be moving.</p>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;portal-store-transform.svg">
+</figure>
+<pre class="giallo z-code"><code data-lang="swift"><span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">geometryNode</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> portalTransform</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    inputs</span><span>: </span><span>GroupInput</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    selfObject</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    normal</span><span>: </span><span>Normal</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> Geometry </span><span>{</span></span>
+<span class="giallo-l"><span class="z-keyword">    var</span><span> geometry </span><span class="z-keyword">=</span><span> inputs.</span><span class="z-support">get</span><span>(</span><span class="z-punctuation z-definition z-string">&quot;</span><span class="z-string">Geometry</span><span class="z-punctuation z-definition z-string">&quot;</span><span>)</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> object </span><span class="z-keyword">=</span><span> inputs.</span><span class="z-support">get</span><span>(</span><span class="z-punctuation z-definition z-string">&quot;</span><span class="z-string">Object</span><span class="z-punctuation z-definition z-string">&quot;</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> otherInfo </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">            object</span><span>:</span><span> object</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            asInstance</span><span>:</span><span class="z-constant"> false</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            transformSpace</span><span>:</span><span> .</span><span class="z-variable z-other">relative</span></span>
+<span class="giallo-l"><span>        )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Ok now store the actual transforms</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> otherInfo </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">        //</span><span class="z-comment"> NOTE: How object is transformed relative to self object.</span></span>
+<span class="giallo-l"><span class="z-support">        transformSpace</span><span>:</span><span> .</span><span class="z-variable z-other">relative</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        object</span><span>:</span><span> connectedPortal</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        asInstance</span><span>:</span><span class="z-constant"> false</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>    geometry.</span><span class="z-support">storeNamedAttribute</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        dataType</span><span>:</span><span> .</span><span class="z-variable z-other">vector</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        domain</span><span>:</span><span> .</span><span class="z-variable z-other">face</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        name</span><span>:</span><span class="z-punctuation z-definition z-string"> &quot;</span><span class="z-string">offset_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        value</span><span>:</span><span> otherInfo.</span><span class="z-variable z-other">location</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> rotateToOther </span><span class="z-keyword">=</span><span> otherInfo.</span><span class="z-variable z-other">rotation</span><span>.</span><span class="z-support">toEuler</span><span>(</span><span>)</span></span>
+<span class="giallo-l"><span>    geometry.</span><span class="z-support">storeNamedAttribute</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        dataType</span><span>:</span><span> .</span><span class="z-variable z-other">vector</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        domain</span><span>:</span><span> .</span><span class="z-variable z-other">face</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        name</span><span>:</span><span class="z-punctuation z-definition z-string"> &quot;</span><span class="z-string">rotate_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        value</span><span>:</span><span> rotateToOther</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>    geometry.</span><span class="z-support">storeNamedAttribute</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        dataType</span><span>:</span><span> .</span><span class="z-variable z-other">vector</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        domain</span><span>:</span><span> .</span><span class="z-variable z-other">face</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        name</span><span>:</span><span class="z-punctuation z-definition z-string"> &quot;</span><span class="z-string">scale_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        value</span><span>:</span><span> otherInfo.</span><span class="z-variable z-other">scale</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Compute and cache normal correction</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> otherPortalNormal </span><span class="z-keyword">=</span><span class="z-support"> vec3</span><span>(</span><span class="z-constant">0.0</span><span>, </span><span class="z-constant">0.0</span><span>, </span><span class="z-constant">1.0</span><span>)</span></span>
+<span class="giallo-l"><span>      .</span><span class="z-support">vectorRotate</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">          type</span><span>:</span><span> .</span><span class="z-variable z-other">euler</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">          invert</span><span>:</span><span class="z-constant"> false</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">          rotation</span><span>:</span><span> rotateToOther</span><span>,</span></span>
+<span class="giallo-l"><span>      )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span> geometry</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>My version of both of these is slightly different from the tutorial video I
+linked to above. I only store relative transforms because that's all you really
+need, and also I modified the position transform to accomodate my need to
+support portal scaling.</p>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;portal-material-nodes.svg">
+</figure>
+<pre class="giallo z-code"><code data-lang="swift"><span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">shader</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> portal</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    geometry</span><span>: </span><span>Geometry</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    objectInfo</span><span>: </span><span>ObjectInfo</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    attributes</span><span>: </span><span>Attributes</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> MaterialOutput </span><span>{</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> offsetToOther:</span><span> Vec3 </span><span class="z-keyword">=</span><span> attributes.</span><span class="z-support">geometry</span><span>(</span><span class="z-punctuation z-definition z-string">&quot;</span><span class="z-string">offset_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>)</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> rotateToOther:</span><span> Vec3 </span><span class="z-keyword">=</span><span> attributes.</span><span class="z-support">geometry</span><span>(</span><span class="z-punctuation z-definition z-string">&quot;</span><span class="z-string">rotate_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>)</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> scaleToOther:</span><span> Vec3 </span><span class="z-keyword">=</span><span> attributes.</span><span class="z-support">geometry</span><span>(</span><span class="z-punctuation z-definition z-string">&quot;</span><span class="z-string">scale_to_other</span><span class="z-punctuation z-definition z-string">&quot;</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> normalCorrection:</span><span> Vec3 </span><span class="z-keyword">=</span><span class="z-constant"> -0.001</span><span class="z-keyword"> *</span><span> geometry.</span><span class="z-variable z-other">normal</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Direction ray should exit out-portal.</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> exitDirection </span><span class="z-keyword">=</span><span class="z-constant"> -1.0</span><span class="z-keyword"> *</span><span> geometry.</span><span class="z-variable z-other">incoming</span></span>
+<span class="giallo-l"><span>        .</span><span class="z-support">vectorRotate</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">            type</span><span>:</span><span> .</span><span class="z-variable z-other">euler</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            invert</span><span>:</span><span class="z-constant"> false</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            center</span><span>:</span><span> Vec3.</span><span class="z-variable z-other">zero</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            rotation</span><span>:</span><span> rotateToOther</span></span>
+<span class="giallo-l"><span>        )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Location of the ray on the output portal surface</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> exitPosition </span><span class="z-keyword">=</span><span class="z-support"> mapping</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        type</span><span>:</span><span> .</span><span class="z-support z-variable">point</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        vector</span><span>:</span><span> geometry.</span><span class="z-variable z-other">position</span><span class="z-keyword"> +</span><span> normalCorrection</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        location</span><span>:</span><span> offsetToOther</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        rotation</span><span>:</span><span> rotateToOther</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        scale</span><span>:</span><span> scaleToOther</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Move the ray and change direction</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> surface </span><span class="z-keyword">=</span><span class="z-support"> rayPortalBSDF</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        color</span><span>:</span><span> .</span><span class="z-variable z-other">white</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        position</span><span>:</span><span> exitPosition</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        direction</span><span>:</span><span> exitDirection</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span class="z-support"> MaterialOutput</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        surface</span><span>:</span><span> surface</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>Note that we Must use Cycles since Ray Portal BSDF is only available in Cycles
+(<a rel="nofollow noreferrer external" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/ray_portal.html">Ray Portal
+BSDF</a>).
+That's fine though since a ray tracer is more suited to portal rendering than a
+rasterizer (EEVEE).</p>
+<h2 id="important-nodes">Important Nodes<a class="zola-anchor" href="#important-nodes" aria-label="Anchor link for: important-nodes" style="visibility: hidden;"></a>
+</h2>
+<h3 id="ray-portal-bsdf">Ray Portal BSDF<a class="zola-anchor" href="#ray-portal-bsdf" aria-label="Anchor link for: ray-portal-bsdf" style="visibility: hidden;"></a>
+</h3>
+<p>This is a shader that lets you arbitrarily set the direction and position of a
+ray that hits the shaded object. If you don't supply a direction or position it
+will not be changed. A Ray Portal BSDF without supplied <code>Position</code> or
+<code>Direction</code> is equivalent to a Transparent BSDF.</p>
+<h3 id="geometry">Geometry<a class="zola-anchor" href="#geometry" aria-label="Anchor link for: geometry" style="visibility: hidden;"></a>
+</h3>
+<p><code>Position</code>: Place the ray hit on the surface of the object (world space).</p>
+<p><code>Normal</code>: Surface normal at the hit position. (Normalized)</p>
+<p><code>Incoming</code>: A vector that points towards the direction the ray came from. (Normalized)</p>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;vector-overview-light.png">
+</figure>
+<h3 id="object-info">Object Info<a class="zola-anchor" href="#object-info" aria-label="Anchor link for: object-info" style="visibility: hidden;"></a>
+</h3>
+<p><code>Location</code> here is the position of the object origin. (world space)</p>
+<p><code>Rotation</code> is of course the rotation of the object. The Blender UI presents
+rotations in euler format, but they are internally stored as quaternions (hence
+the need to perform a <code>to_euler</code> in the graph above).</p>
+<blockquote>
+<p><code>Transform Space</code>: The transformation of the vector and geometry outputs.</p>
+<ul>
+<li><code>Original</code>: Output the geometry relative to the input object transform, and the location, rotation and scale relative to the world origin.</li>
+<li><code>Relative</code>: Bring the input object geometry, location, rotation and scale into the modified object, maintaining the relative position between the two objects in the scene.</li>
+</ul>
+</blockquote>
+<p>Quick clafiying note on the transform space property (<code>Relative</code> or <code>Original</code>),
+the <a rel="nofollow noreferrer external" href="https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/input/scene/object_info.html">docs
+explanation</a>
+has some clunky wording. <code>Original</code> is what you would see in the n-panel with
+the object transforms, <code>Relative</code> is the difference between the transforms for
+two objects. It is the transformation from the object with the geometry node
+modifier to the object passed to <code>Object Info</code>.</p>
+<h1 id="geometry-teleportation">Geometry Teleportation<a class="zola-anchor" href="#geometry-teleportation" aria-label="Anchor link for: geometry-teleportation" style="visibility: hidden;"></a>
+</h1>
+<p>Here we actualy don't have so conventional a solution in Blender. There is a rough set
+of things that needs to be done before this is working.</p>
+<ol>
+<li>Divide the mesh into geometry that should stay and geometry that should be portaled. (hard)</li>
+<li>Make the portaled geometry disappear at the in portal and appear at the out portal. (easy)</li>
+</ol>
+<h2 id="divide-geometry">Divide Geometry<a class="zola-anchor" href="#divide-geometry" aria-label="Anchor link for: divide-geometry" style="visibility: hidden;"></a>
+</h2>
+<p>Step one is a bit troublesome because we want our portals to work for static renders. And
+presumably which side of the portal the geometry should exit on is determined by which
+side it goes in on, but in a render we don't really have a concept of movement. To fix
+this we need to define outside of the system which side of the system we want the geometry
+moved on. I'll do this by accepting a vertex group and pulling the weights. A weight below
+0.5 will mean it will exit the back of the out-portal and above and including 0.5 means
+it will exit out the front of  the out-portal.</p>
+<p>So we can figure out which geometry should be selected once it passes a certain side but
+because I'm trying to store the weights in a single vertex group per mesh we need to perform
+additional selection. Alot of implementation seem to just use a plane to cut the mesh and
+everything on the other side of the plane is moved. That is not flexible enough for what I want.</p>
+<ol>
+<li>
+<p>The portal is just a face so we can extrude it by some depth along it's
+normal and then the geometry past the face which lies inside of the prism is
+what we want to transport.</p>
+</li>
+<li>
+<p>For fully connected meshes we can select the edges that intersect with the
+portal face then isolate mesh components which lie on either side of the portal.</p>
+</li>
+</ol>
+<p>Approach #1 is not it for me. To isolate all the mesh in a volume the initial
+instinct would be to do a mesh intersection. Except the problem with that is
+that it will nuke your mesh attributes because it may be the case that non of
+the vertices after the intersection was in the original mesh. And so to play
+nice with shading we need to restrict ourselves to mesh differences. And now
+considering the approach I suppose you could do a cut by making your volume and
+flipping the faces on it and going through each face and doing a boolean
+difference (after making sure you join the original planar face back to the
+extrusion flipped correctly, convex-hull is a one node solution to this but
+fixing the geometry manually isn't much a hassle either and is faster ), but
+that would be incredibly slow unless you implement the difference yourself and
+just delete edges from the mesh. Which in that case would make the final mesh
+pieces appear pretty jagged near the portal surface and would not be a viable
+solution for meshes with little geometry.</p>
+<p>I went with approach #2. Cut the mesh in half, isolate the islands that are left
+on the other side of the portal and move them to the out portal. Unfortunatly mesh
+slow—like really really slow. Luckily Blender 4.5 introduces a solver optimized
+for booleans of manifold meshes which is significantly faster. So I have basically two
+versions of my mesh portal nodes. A fast one for manifold geometry and a significantly
+slower one which is set to use the exact boolean solver.</p>
+<p>The rough template looks like this:
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;portal-cut-geometry.svg">
+</figure>
+</p>
+<pre class="giallo z-code"><code data-lang="swift"><span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">nodeGroup</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> cutGeometryWithSurface</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    geometry</span><span>: </span><span>Geometry</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    surface</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> Geometry </span><span>{</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> This is the smallest I could get without breakage. But that was probably</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> because I set my merge distance to 0.001 also.</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> cutWidth </span><span class="z-keyword">=</span><span class="z-constant"> 0.001</span><span>;</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> surfaceInfo </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span><span>surface</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Build the cutting cylinder.</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> cylinder:</span><span> Geometry </span><span class="z-keyword">=</span><span class="z-support"> transformGeometry</span><span>(</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">        //</span><span class="z-comment"> NOTE: Pay attention to all here when in the context of manifold portal.</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">        //</span><span class="z-comment"> If we don&#39;t merge globally we&#39;ll get holes.</span></span>
+<span class="giallo-l"><span class="z-support">        geometry</span><span>:</span><span class="z-support"> mergeByDistance</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">            mode</span><span>:</span><span> .</span><span class="z-variable z-other">all</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            distance</span><span>:</span><span class="z-constant"> 0.001</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">            geometry</span><span>:</span><span class="z-support"> joinGeometry</span><span>(</span><span class="z-support">geometry</span><span>:</span><span> [</span><span class="z-support">flipFaces</span><span>(</span><span class="z-support">mesh</span><span>:</span><span> surfaceInfo.</span><span class="z-variable z-other">geometry</span><span>)</span><span>, </span><span class="z-support">extrudeMesh</span><span>(</span><span class="z-support">mesh</span><span>:</span><span> surfaceInfo.</span><span class="z-variable z-other">geometry</span><span>, </span><span class="z-support">offsetScale</span><span>:</span><span> cutWidth</span><span>)</span><span>]</span><span>)</span></span>
+<span class="giallo-l"><span>        )</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        translation</span><span>:</span><span class="z-support"> combineXYZ</span><span>(</span><span class="z-support">z</span><span>:</span><span> cutWidth </span><span class="z-keyword">/</span><span class="z-constant"> -2.0</span><span>)</span><span>.</span><span class="z-support">rotateVector</span><span>(</span><span class="z-support">rotation</span><span>:</span><span> surfaceInfo.</span><span class="z-variable z-other">rotation</span><span>)</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> If we have non manifold geometry we can just swap the solver.</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> Unfortunately I would need to duplicate the node and add logic for this.</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> And I don&#39;t want to do that &lt;(｀^´)&gt;</span></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span class="z-support"> meshBoolean</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        operation</span><span>:</span><span> .</span><span class="z-variable z-other">difference</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        solver</span><span>:</span><span> .</span><span class="z-variable z-other">manifold</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        mesh1</span><span>:</span><span> geometry</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        mesh2</span><span>:</span><span> cylinder</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>Ok so we have cut the mesh like a hot metal ruler cuts through air. Now we need
+to consider the disjoint pieces of the mesh and decide which pieces should be
+moved. The obvious thing to do is just find chunks of geometry whose vertices
+are all past the portal surface. But we should be specific about what "past"
+means.</p>
+<p>The most basic past means on a certain side of the plane containing the portal
+surface. Using this definition of past though would result in the mesh being
+transported to the out portal whenever the modifier is active. We could
+constrain ourselves a little bit and say that the closest point to the plane
+must lie within the portal boundary and the offset from that point to our vertex
+must be normal to the plane. That would give you an approach #1 flavoured result
+where all the vertices of the mesh piece would need to be within an infinetly
+extruded prism along the portal normal. That's pretty easy to do with Geometry
+Proximity. You could also require that at least one vertex is within a certain
+distance of the portal. Or say that all the vertices of the mesh must have a
+certain weight in a given vertex group as I suggested earlier.</p>
+<p>The criteria you chouse of course depends on the use case. I'm trying to go generic. So I'll only use the most generic criteria: all your vertices are on
+a certain side of the plane.</p>
+<p><figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;group-signed-distance.svg">
+</figure>
+
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;portal-teleport-geometry.svg">
+</figure>
+</p>
+<pre class="giallo z-code"><code data-lang="swift"><span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">nodeGroup</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> signedDistanceFromPlane</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    planeNormal</span><span>: </span><span>Vec3</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    pointOnPlane</span><span>: </span><span>Vec3</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    vector</span><span>: </span><span>Vec3</span><span>,</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> float </span><span>{</span></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span> planeNormal.</span><span class="z-support">dot</span><span>(</span><span>vector</span><span>)</span><span class="z-keyword"> -</span><span> planeNormal.</span><span class="z-support">dot</span><span>(</span><span>pointOnPlane</span><span>)</span></span>
+<span class="giallo-l"><span>}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">geometryNodes</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> portalManifoldObject</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    geometry</span><span>: </span><span>Geometry</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    position</span><span>: </span><span>Position</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    meshIsland</span><span>: </span><span>MeshIsland</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    inPortal</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    outPortal</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> Geometry </span><span>{</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> inPortalInfo </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span><span class="z-support">object</span><span>:</span><span> inPortal</span><span>, </span><span class="z-support">transformSpace</span><span>:</span><span> .</span><span class="z-variable z-other">relative</span><span>)</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> inPortalNormal </span><span class="z-keyword">=</span><span class="z-support"> vec3</span><span>(</span><span class="z-support">z</span><span>:</span><span class="z-constant"> 1.0</span><span>)</span><span>.</span><span class="z-support">rotateVector</span><span>(</span><span class="z-support">rotation</span><span>:</span><span> inPortalInfo.</span><span class="z-variable z-other">rotation</span><span>)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> dist </span><span class="z-keyword">=</span><span class="z-support"> signedDistanceFromPlane</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        planeNormal</span><span>:</span><span> inPortalNormal</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        pointOnPlane</span><span>:</span><span> inPortalInfo.</span><span class="z-variable z-other">location</span><span>,</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">        //</span><span class="z-comment"> I didn&#39;t actually use the evaluate on domain, this is just for clarity</span></span>
+<span class="giallo-l"><span class="z-support">        vector</span><span>:</span><span class="z-support"> evaluateOnDomain</span><span>(</span><span class="z-support">type</span><span>:</span><span> .</span><span class="z-variable z-other">vector</span><span>, </span><span class="z-support">domain</span><span>:</span><span> .</span><span class="z-support z-variable">point</span><span>, </span><span class="z-support">value</span><span>:</span><span> position</span><span>)</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> criteria </span><span class="z-keyword">=</span><span class="z-support"> accumulateField</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        type</span><span>:</span><span> .</span><span class="z-support z-variable">float</span></span>
+<span class="giallo-l"><span>        domain</span><span class="z-keyword">:</span><span> .</span><span class="z-support z-variable">point</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        value</span><span>:</span><span> dist </span><span class="z-keyword">&lt;</span><span class="z-constant"> 0.0</span><span class="z-keyword"> &amp;&amp;</span><span class="z-support"> notEqual</span><span>(</span><span class="z-support">A</span><span>:</span><span> dist</span><span>, </span><span class="z-support">B</span><span>:</span><span class="z-constant"> 0.0</span><span>, </span><span class="z-support">epsilon</span><span>:</span><span class="z-constant"> 0.01</span><span>)</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        groupId</span><span>:</span><span> meshIsland.</span><span class="z-variable z-other">islandIndex</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> pieces </span><span class="z-keyword">=</span><span class="z-support"> separateGeometry</span><span>(</span></span>
+<span class="giallo-l"><span class="z-support">        geometry</span><span>:</span><span class="z-support"> cutGeometryWithSurface</span><span>(</span><span class="z-support">geometry</span><span>:</span><span> geometry</span><span>, </span><span class="z-support">surface</span><span>:</span><span> inPortal</span><span>)</span><span>,</span></span>
+<span class="giallo-l"><span class="z-support">        selection</span><span>:</span><span> criteria</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span class="z-support"> joinGeometry</span><span>(</span><span>[</span></span>
+<span class="giallo-l"><span class="z-support">        relativeTransformGeometry</span><span>(</span><span class="z-support">fromObject</span><span>:</span><span> inPortal</span><span>, </span><span class="z-support">toObject</span><span>:</span><span> outPortal</span><span>, </span><span class="z-support">geometry</span><span>:</span><span> pieces.</span><span class="z-variable z-other">selected</span><span>)</span><span>,</span></span>
+<span class="giallo-l"><span>        pieces.</span><span class="z-variable z-other">inverted</span><span>,</span></span>
+<span class="giallo-l"><span>    ]</span><span>)</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre><h2 id="portal-geometry">Portal Geometry<a class="zola-anchor" href="#portal-geometry" aria-label="Anchor link for: portal-geometry" style="visibility: hidden;"></a>
+</h2>
+<p>This is trivially easy compared to division and on a nice note since we're in
+geometry nodes now we can actually use matrices which makes our transform
+really nice:</p>
+<figure>
+    <img src="&#x2F;blog&#x2F;blender-portal&#x2F;transform-relative-geometry.svg">
+</figure>
+<pre class="giallo z-code"><code data-lang="swift"><span class="giallo-l"><span class="z-storage">@</span><span class="z-storage">nodeGroup</span></span>
+<span class="giallo-l"><span class="z-storage z-type">func</span><span class="z-entity z-name"> relativeTransformGeometry</span><span>(</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    fromObject</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    toObject</span><span>: </span><span>Object</span><span>,</span></span>
+<span class="giallo-l"><span class="z-entity z-name">    geometry</span><span>: </span><span>Geometry</span><span>,</span></span>
+<span class="giallo-l"><span>)</span><span class="z-keyword"> -&gt;</span><span> Geometry </span><span>{</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> selfToFrom </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span><span class="z-support">transformSpace</span><span>:</span><span> .</span><span class="z-variable z-other">relative</span><span>, </span><span class="z-support">object</span><span>:</span><span> fromObject</span><span>)</span><span>.</span><span class="z-variable z-other">transform</span></span>
+<span class="giallo-l"><span class="z-keyword">    let</span><span> selfToTo </span><span class="z-keyword">=</span><span class="z-support"> objectInfo</span><span>(</span><span class="z-support">transformSpace</span><span>:</span><span> .</span><span class="z-variable z-other">relative</span><span>, </span><span class="z-support">object</span><span>:</span><span> toObject</span><span>)</span><span>.</span><span class="z-variable z-other">transform</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> I wrote it like this to be clear about the argument order for the</span></span>
+<span class="giallo-l"><span class="z-punctuation z-definition z-comment">    //</span><span class="z-comment"> node. Order is as you would expect, with (mat0, mat1) -&gt; mat0 * mat1</span></span>
+<span class="giallo-l"><span class="z-keyword">    return</span><span class="z-support"> multiplyMatrices</span><span>(</span></span>
+<span class="giallo-l"><span>        selfToTo</span><span>, </span><span class="z-support">invertMatrix</span><span>(</span><span>selfToFrom</span><span>)</span><span>.</span><span class="z-variable z-other">matrix</span><span>,</span></span>
+<span class="giallo-l"><span>    )</span></span>
+<span class="giallo-l"><span>}</span></span></code></pre>
+<p>And that is about all.</p>
+
+      </article>
+
+      
+      
+
+      
+      
+    </div>
+
+    
+
+
+<footer>
+  <div class="left">
+    <div class="copyright">
+      © 2025 Generic Confluent
+      
+      <span>|</span>
+      Built with <a href="https://www.getzola.org" rel="noreferrer" target="_blank">zola</a> and <a href="https://github.com/isunjn/serene" rel="noreferrer" target="_blank">serene</a>
+      
+    </div>
+  </div>
+
+  <div class="right">
+    
+    
+      
+    
+    
+    <a id="rss-btn" href="https://generic-confluent.ca/blog/atom.xml">RSS</a>
+    
+    
+
+    
+    
+    
+    <button id="theme-toggle" aria-label="theme switch">
+      <span class="moon-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill="currentColor"></path></svg>
+</span>
+      <span class="sun-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="currentColor"></path></svg>
+</span>
+    </button>
+    
+  </div>
+</footer>
+
+
+
+
+<dialog id="rss-mask">
+  <div>
+    <a href="https:&#x2F;&#x2F;generic-confluent.ca&#x2F;blog&#x2F;atom.xml">https:&#x2F;&#x2F;generic-confluent.ca&#x2F;blog&#x2F;atom.xml</a>
+    
+    
+    <button autofocus aria-label="copy" data-link="https:&#x2F;&#x2F;generic-confluent.ca&#x2F;blog&#x2F;atom.xml" data-copy-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" data-check-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z" fill="currentColor"></path></svg>
+
+    </button>
+  </div>
+</dialog>
+
+
+
+  </main>
+</div>
+
+  
+<script src="/js/lightense.min.js"></script>
+
+
+  <script src="https://generic-confluent.ca/js/main.js"></script>
+</body>
+
+</html>
